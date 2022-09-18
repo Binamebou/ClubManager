@@ -113,7 +113,7 @@ if (strlen($_SESSION['userId'] == 0)) {
                                     </div>
                                     <div class="form-group">
                                         <label for="birthDate">Date de naissance</label>
-                                        <input type="text" name="birthDate" value="" class="form-control">
+                                        <input type="date" name="birthDate" value="" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="mobileNumber">Téléphone</label>
