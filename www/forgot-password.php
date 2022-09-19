@@ -43,7 +43,7 @@ include('../includes/dbconnection.php');
                 <h3 class="inner-tittle t-inner" style="color: lightblue">Veuillez contacter le secrétaire du club</h3>
             </div>
             <div class="new">
-                <p><a href="../index.php">Retour vers l'accueil</a></p>
+                <p><a href="./index.php">Retour vers l'accueil</a></p>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -59,7 +59,7 @@ include('../includes/dbconnection.php');
 <!--footer section start-->
 <div class="footer">
 
-    <?php include_once('../includes/footer.php'); ?>
+    <?php include_once('./includes/footer.php'); ?>
 </div>
 <!--footer section end-->
 <!--/404-->

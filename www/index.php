@@ -20,6 +20,17 @@ if (isset($_POST['login'])) {
 //            $_SESSION['superAdmin'] = $result->SuperAdmin;
         }
         $_SESSION['login'] = $_POST['username'];
+
+        $sql = "SELECT * FROM myclub_rights WHERE member_id = :userid";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':userid', $_SESSION['userId'], PDO::PARAM_STR);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+        if ($query->rowCount() > 0) {
+            foreach ($results as $result) {
+                $_SESSION['ROLE_' . $result->role_id] = true;
+            }
+        }
         echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
     } else {
         echo "<script>alert('Login ou mot de passe inconnu');</script>";
@@ -68,7 +79,8 @@ if (isset($_POST['login'])) {
                 <input type="text" class="text" value="Votre login" onfocus="this.value = '';"
                        onblur="if (this.value == '') {this.value = 'Votre login';}" name="username" required="true">
                 <input type="password" value="Votre mot de passe" onfocus="this.value = '';"
-                       onblur="if (this.value == '') {this.value = 'Votre mot de passe';}" name="password" required="true">
+                       onblur="if (this.value == '') {this.value = 'Votre mot de passe';}" name="password"
+                       required="true">
                 <div class="submit"><input type="submit" onclick="myFunction()" value="Connexion" name="login"></div>
                 <div class="clearfix"></div>
 
@@ -76,10 +88,7 @@ if (isset($_POST['login'])) {
                     <p><a href="forgot-password.php">Mot de passe oublié ?</a></p>
                     <div class="clearfix"></div>
                 </div>
-                <div class="new">
-                    <p><a href="../index.php">Retour vers l'accueil</a></p>
-                    <div class="clearfix"></div>
-                </div>
+
             </form>
         </div>
 

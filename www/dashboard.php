@@ -53,20 +53,20 @@ if (strlen($_SESSION['userId'] == 0)) {
     <div class="left-content">
         <div class="inner-content">
 
-            <?php include_once('../includes/header.php'); ?>
+            <?php include_once('./includes/header.php'); ?>
 
             <div class="outter-wp">
                 <!--custom-widgets-->
                 <div class="custom-widgets">
                     <div class="row-one">
-                        Bienvenue
+                        Bienvenue.
                     </div>
                 </div>
             </div>
             <div class="outter-wp">
                 <!--custom-widgets-->
 
-                <?php include_once('../includes/footer.php'); ?>
+                <?php include_once('./includes/footer.php'); ?>
 
             </div>
         </div>

@@ -8,21 +8,21 @@ if (strlen($_SESSION['userId']==0)) {
   } else{
 if(isset($_POST['submit']))
 {
-$adminid=$_SESSION['userId'];
+$userid=$_SESSION['userId'];
 $cpassword=md5($_POST['currentpassword']);
 $newpassword=md5($_POST['newpassword']);
-$sql ="SELECT ID FROM myclub_admin WHERE ID=:adminid and Password=:cpassword";
+$sql ="SELECT ID FROM myclub_member WHERE ID=:userid and Password=:cpassword";
 $query= $dbh -> prepare($sql);
-$query-> bindParam(':adminid', $adminid, PDO::PARAM_STR);
+$query-> bindParam(':userid', $userid, PDO::PARAM_STR);
 $query-> bindParam(':cpassword', $cpassword, PDO::PARAM_STR);
 $query-> execute();
 $results = $query -> fetchAll(PDO::FETCH_OBJ);
 
 if($query -> rowCount() > 0)
 {
-$con="update myclub_admin set Password=:newpassword where ID=:adminid";
+$con="update myclub_member set Password=:newpassword where ID=:userid";
 $chngpwd1 = $dbh->prepare($con);
-$chngpwd1-> bindParam(':adminid', $adminid, PDO::PARAM_STR);
+$chngpwd1-> bindParam(':userid', $userid, PDO::PARAM_STR);
 $chngpwd1-> bindParam(':newpassword', $newpassword, PDO::PARAM_STR);
 $chngpwd1->execute();
 
@@ -78,7 +78,7 @@ return true;
 <div class="left-content">
 <div class="inner-content">
 	
-<?php include_once('../includes/header.php');?>
+<?php include_once('./includes/header.php');?>
 				<!--//outer-wp-->
 <div class="outter-wp">
 					<!--/sub-heard-part-->
@@ -105,10 +105,10 @@ return true;
 </div>
 </div> 
 </div>
-<?php include_once('../includes/footer.php');?>
+<?php include_once('./includes/footer.php');?>
 </div>
 </div>		
-<?php include_once('includes/sidebar.php');?>
+<?php include_once('./includes/sidebar.php');?>
 <div class="clearfix"></div>		
 </div>
 <script>

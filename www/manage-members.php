@@ -19,18 +19,18 @@ if (strlen($_SESSION['userId'] == 0)) {
                 window.scrollTo(0, 1);
             } </script>
         <!-- Bootstrap Core CSS -->
-        <link href="/www/css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+        <link href="./css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
         <!-- Custom CSS -->
-        <link href="/www/css/style.css" rel='stylesheet' type='text/css'/>
+        <link href="./css/style.css" rel='stylesheet' type='text/css'/>
         <!-- Graph CSS -->
-        <link href="/www/css/font-awesome.css" rel="stylesheet">
+        <link href="./css/font-awesome.css" rel="stylesheet">
         <!-- jQuery -->
         <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet'
               type='text/css'>
         <!-- lined-icons -->
-        <link rel="stylesheet" href="/www/css/icon-font.min.css" type='text/css'/>
+        <link rel="stylesheet" href="./css/icon-font.min.css" type='text/css'/>
         <!-- /js -->
-        <script src="/www/js/jquery-1.10.2.min.js"></script>
+        <script src="./js/jquery-1.10.2.min.js"></script>
         <!-- //js-->
     </head>
     <body>
@@ -39,7 +39,7 @@ if (strlen($_SESSION['userId'] == 0)) {
         <div class="left-content">
             <div class="inner-content">
                 <!-- header-starts -->
-                <?php include_once('../includes/header.php'); ?>
+                <?php include_once('./includes/header.php'); ?>
                 <!-- //header-ends -->
                 <!--outter-wp-->
                 <div class="outter-wp">
@@ -111,7 +111,7 @@ if (strlen($_SESSION['userId'] == 0)) {
                     <!--//graph-visual-->
                 </div>
                 <!--//outer-wp-->
-                <?php include_once('../includes/footer.php'); ?>
+                <?php include_once('./includes/footer.php'); ?>
             </div>
         </div>
         <!--//content-inner-->
@@ -137,10 +137,10 @@ if (strlen($_SESSION['userId'] == 0)) {
         });
     </script>
     <!--js -->
-    <script src="/www/js/jquery.nicescroll.js"></script>
-    <script src="/www/js/scripts.js"></script>
+    <script src="./js/jquery.nicescroll.js"></script>
+    <script src="./js/scripts.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="/www/js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
     </body>
     </html>
 <?php } ?>
