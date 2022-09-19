@@ -35,7 +35,7 @@
                     
                     <button type="button" class="btn btn-block mt-lg-5 mt-3 w3ls-btn p-1 btn-theme text-white  text-uppercase font-weight-bold" 
                     >
-                    <a class="nav-link" href="admin/index.php">Gestion</a>
+                    <a class="nav-link" href="www/index.php">Gestion</a>
                 </button>
                 <button type="button" class="btn btn-block mt-lg-5 mt-3 w3ls-btn p-1 btn-theme text-white  text-uppercase font-weight-bold" 
                     >

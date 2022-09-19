@@ -10,9 +10,9 @@ CREATE TABLE myclub_admin (
                               LastUpdate timestamp DEFAULT current_timestamp()
 );
 
---  Create a first admin with default credential : Username: admin  Password: Test@123
+--  Create a first www with default credential : Username: www  Password: Test@123
 INSERT INTO myclub_admin (LastName, FirstName, Login, Email, Password, SuperAdmin) VALUES
-    ('Admin', 'Admin', 'admin', 'admin@gmail.com', 'f925916e2754e5e03f75dd58a5733251', true);
+    ('Admin', 'Admin', 'www', 'www@gmail.com', 'f925916e2754e5e03f75dd58a5733251', true);
 
 CREATE TABLE myclub_member (
                               ID int(10) primary key auto_increment,

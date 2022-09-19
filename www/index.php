@@ -6,7 +6,7 @@ include('../includes/dbconnection.php');
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
-    $sql = "SELECT * FROM myclub_admin WHERE upper(Login)=upper(:username) and Password=:password";
+    $sql = "SELECT * FROM myclub_member WHERE upper(Login)=upper(:username) and Password=:password";
     $query = $dbh->prepare($sql);
     $query->bindParam(':username', $username, PDO::PARAM_STR);
     $query->bindParam(':password', $password, PDO::PARAM_STR);
@@ -17,7 +17,7 @@ if (isset($_POST['login'])) {
             $_SESSION['userId'] = $result->ID;
             $_SESSION['lastName'] = $result->LastName;
             $_SESSION['firstName'] = $result->FirstName;
-            $_SESSION['superAdmin'] = $result->SuperAdmin;
+//            $_SESSION['superAdmin'] = $result->SuperAdmin;
         }
         $_SESSION['login'] = $_POST['username'];
         echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
@@ -40,18 +40,18 @@ if (isset($_POST['login'])) {
             window.scrollTo(0, 1);
         } </script>
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+    <link href="./css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
     <!-- Custom CSS -->
-    <link href="css/style.css" rel='stylesheet' type='text/css'/>
+    <link href="./css/style.css" rel='stylesheet' type='text/css'/>
     <!-- Graph CSS -->
-    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="./css/font-awesome.css" rel="stylesheet">
     <!-- jQuery -->
     <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet'
           type='text/css'>
     <!-- lined-icons -->
-    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css'/>
+    <link rel="stylesheet" href="./css/icon-font.min.css" type='text/css'/>
     <!-- //lined-icons -->
-    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="./js/jquery-1.10.2.min.js"></script>
     <!--clock init-->
 </head>
 <body>
@@ -94,7 +94,7 @@ if (isset($_POST['login'])) {
 <!--footer section start-->
 <div class="footer">
 
-    <?php include_once('../includes/footer.php'); ?>
+    <?php include_once('./includes/footer.php'); ?>
 </div>
 <!--footer section end-->
 <!--/404-->

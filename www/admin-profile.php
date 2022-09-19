@@ -21,7 +21,7 @@ if (strlen($_SESSION['userId'] == 0)) {
         $query->execute();
 
         echo '<script>alert("Votre profil a été mis à jour")</script>';
-        echo "<script>window.location.href ='admin-profile.php'</script>";
+        echo "<script>window.location.href ='www-profile.php'</script>";
 
     }
     ?>

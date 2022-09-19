@@ -11,7 +11,7 @@
         <?php
         if ($_SESSION['userId']) {
             ?>
-            <a href="dashboard.php"><img src="images/images.jpg" height="70" width="70"></a>
+            <a href="dashboard.php"><img src="/www/images/images.jpg" height="70" width="70"></a>
             <a href="dashboard.php"><span
                         class=" name-caret"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName']; ?></span></a>
         <?php } ?>
