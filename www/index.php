@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('../includes/dbconnection.php');
+include('./../includes/dbconnection.php');
 
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
@@ -85,7 +85,7 @@ if (isset($_POST['login'])) {
                 <div class="clearfix"></div>
 
                 <div class="new">
-                    <p><a href="forgot-password.php">Mot de passe oublié ?</a></p>
+                    <p><a href="./forgot-password.php">Mot de passe oublié ?</a></p>
                     <div class="clearfix"></div>
                 </div>
 
@@ -108,9 +108,9 @@ if (isset($_POST['login'])) {
 <!--footer section end-->
 <!--/404-->
 <!--js -->
-<script src="js/jquery.nicescroll.js"></script>
-<script src="js/scripts.js"></script>
+<script src="./js/jquery.nicescroll.js"></script>
+<script src="./js/scripts.js"></script>
 <!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 </body>
 </html>

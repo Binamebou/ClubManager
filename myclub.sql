@@ -23,8 +23,8 @@ VALUES (1, 'Doe', 'John', 'admin', '+32123456', 'john.doe@gmail.com', 'f925916e2
 
 CREATE TABLE `myclub_rights`
 (
-    `member_id` int(11) primary key NOT NULL,
-    `role_id`   varchar(20) primary key NOT NULL
+    `member_id` int(11) NOT NULL,
+    `role_id`   varchar(20) NOT NULL
 );
 
 INSERT INTO `myclub_rights` (`member_id`, `role_id`)

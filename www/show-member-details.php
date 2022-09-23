@@ -44,7 +44,7 @@ if (strlen($_SESSION['userId'] == 0)) {
         <div class="left-content">
             <div class="inner-content">
 
-                <?php include_once('./includes/header.php');?>
+                <?php include_once('includes/header.php');?>
                 <!--//outer-wp-->
                 <div class="outter-wp">
                     <!--/sub-heard-part-->
@@ -112,7 +112,7 @@ if (strlen($_SESSION['userId'] == 0)) {
                         </div>
                     </div>
                 </div>
-                <?php include_once('./includes/footer.php'); ?>
+                <?php include_once('includes/footer.php'); ?>
             </div>
         </div>
         <?php include_once('includes/sidebar.php'); ?>

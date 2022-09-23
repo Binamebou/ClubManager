@@ -78,7 +78,7 @@ return true;
 <div class="left-content">
 <div class="inner-content">
 	
-<?php include_once('./includes/header.php');?>
+<?php include_once('includes/header.php');?>
 				<!--//outer-wp-->
 <div class="outter-wp">
 					<!--/sub-heard-part-->
@@ -105,10 +105,10 @@ return true;
 </div>
 </div> 
 </div>
-<?php include_once('./includes/footer.php');?>
+<?php include_once('includes/footer.php');?>
 </div>
 </div>		
-<?php include_once('./includes/sidebar.php');?>
+<?php include_once('includes/sidebar.php');?>
 <div class="clearfix"></div>		
 </div>
 <script>
