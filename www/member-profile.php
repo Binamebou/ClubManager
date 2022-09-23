@@ -40,7 +40,7 @@ if (strlen($_SESSION['userId'] == 0)) {
     <!DOCTYPE HTML>
     <html>
     <head>
-        <title>Gestion du club</title>
+        <title><?php echo $siteName;?></title>
 
         <script type="application/x-javascript"> addEventListener("load", function () {
                 setTimeout(hideURLbar, 0);

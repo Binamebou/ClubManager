@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Gestion du club</title>
+    <title><?php echo $siteName;?></title>
 
     <script type="application/x-javascript"> addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -69,7 +69,7 @@ if (isset($_POST['login'])) {
 <div class="error_page">
 
     <div class="error-top">
-        <h2 class="inner-tittle page">Gestion du club</h2>
+        <h2 class="inner-tittle page"><?php echo $siteName;?></h2>
         <div class="login">
 
             <div class="buttons login">

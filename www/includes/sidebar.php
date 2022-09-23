@@ -11,7 +11,11 @@
         <?php
         if ($_SESSION['userId']) {
             ?>
-            <a href="dashboard.php"><img src="images/logo_admin.jpg" height="70" width="70"></a>
+            <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                <a href="dashboard.php"><img src="images/logo_admin.jpg" height="70" width="70"></a>
+            <?php } else { ?>
+                <a href="dashboard.php"><img src="images/logo.png" height="70" width="100"></a>
+            <?php } ?>
             <a href="dashboard.php"><span
                         class=" name-caret"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName']; ?></span></a>
         <?php } ?>

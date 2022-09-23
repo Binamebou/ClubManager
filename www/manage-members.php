@@ -10,7 +10,7 @@ if (strlen($_SESSION['userId'] == 0)) {
     <!DOCTYPE HTML>
     <html>
     <head>
-        <title>Gestion du club</title>
+        <title><?php echo $siteName;?></title>
         <script type="application/x-javascript"> addEventListener("load", function () {
                 setTimeout(hideURLbar, 0);
             }, false);
@@ -111,7 +111,7 @@ if (strlen($_SESSION['userId'] == 0)) {
                     <!--//graph-visual-->
                 </div>
                 <!--//outer-wp-->
-                <?php include_once('ncludes/footer.php'); ?>
+                <?php include_once('includes/footer.php'); ?>
             </div>
         </div>
         <!--//content-inner-->

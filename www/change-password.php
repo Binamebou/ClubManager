@@ -37,7 +37,7 @@ echo '<script>alert("Votre mot de passe actuel est incorrect")</script>';
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Gestion du club</title>
+	<title><?php echo $siteName;?></title>
 
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 	<!-- Bootstrap Core CSS -->

@@ -1,4 +1,8 @@
-<?php 
+<?php
+
+//global vars
+$siteName="Gestion du club";
+
 // DB credentials.
 define('DB_HOST','localhost');
 define('DB_USER','myclub');
