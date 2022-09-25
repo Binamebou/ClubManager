@@ -21,8 +21,18 @@ if (!$_SESSION['userId']) {
         $city = $_POST['city'];
         $country = $_POST['country'];
         $birthDate = $_POST['birthDate'];
+        if ($_POST['RGPD']) {
+            $rgpd = 1;
+        } else {
+            $rgpd = 0;
+        }
+        if ($_POST['Mailing']) {
+            $mailing = 1;
+        } else {
+            $mailing = 0;
+        }
 
-        $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate)";
+        $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate, RGPD, Mailing)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate,:rgpd,:mailing)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
         $query->bindParam(':firstName', $firstName, PDO::PARAM_STR);
@@ -35,6 +45,8 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':city', $city, PDO::PARAM_STR);
         $query->bindParam(':country', $country, PDO::PARAM_STR);
         $query->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
+        $query->bindParam(':rgpd', $rgpd);
+        $query->bindParam(':mailing', $mailing);
         $query->execute();
 
         $LastInsertId = $dbh->lastInsertId();
@@ -153,9 +165,18 @@ if (!$_SESSION['userId']) {
                                         <label for="password">Mot de passe</label>
                                         <input type="text" name="password" value="" class="form-control" required='true'>
                                     </div>
+                                    <div class="form-inline">
+                                        <label for="RGPD">Consent à la gestion et la sauvegarde des données personnelles par l'administrateur du site</label>
+                                        <input type="checkbox" name="RGPD" value="1" class="form-inline" checked="checked">
+                                    </div>
+                                    <div class="form-inline">
+                                        <label for="Mailing">Accepte de recevoir des informations par email</label>
+                                        <input type="checkbox" name="Mailing" value="1" class="form-inline" checked="checked">
+                                    </div>
 
                                     <button type="submit" class="btn btn-default" name="submit" id="submit">Ajouter
                                     </button>
+                                    <input type="button" class="btn btn-warning" value="Annuler" onClick="history.back();return true;" />
                                 </form>
                             </div>
                         </div>

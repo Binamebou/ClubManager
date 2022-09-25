@@ -6,7 +6,7 @@ if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else {
     if (isset($_POST['submit'])) {
-        $id = $_GET['id'];
+        $id = $_SESSION['userId'];
         $lastName = $_POST['lastName'];
         $firstName = $_POST['firstName'];
         $mobileNumber = $_POST['mobileNumber'];
@@ -16,10 +16,19 @@ if (!$_SESSION['userId']) {
         $city = $_POST['city'];
         $country = $_POST['country'];
         $birthDate = $_POST['birthDate'];
+        if ($_POST['RGPD']) {
+            $rgpd = 1;
+        } else {
+            $rgpd = 0;
+        }
+        if ($_POST['Mailing']) {
+            $mailing = 1;
+        } else {
+            $mailing = 0;
+        }
 
-        $sql = "update myclub_member set LastName=:lastName, FirstName=:firstName, MobileNumber=:mobileNumber, Email=:email, Address=:address, PostalCode=:postalCode, City=:city, Country=:country, BirthDate=:birthDate where ID=:id";
+        $sql = "update myclub_member set LastName=:lastName, FirstName=:firstName, MobileNumber=:mobileNumber, Email=:email, Address=:address, PostalCode=:postalCode, City=:city, Country=:country, BirthDate=:birthDate, RGPD=:rgpd, Mailing=:mailing, LastUpdate=current_timestamp() where ID=:id";
         $query = $dbh->prepare($sql);
-//$query->bindParam(':acctid',$acctid,PDO::PARAM_STR);
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
         $query->bindParam(':firstName', $firstName, PDO::PARAM_STR);
@@ -30,10 +39,12 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':city', $city, PDO::PARAM_STR);
         $query->bindParam(':country', $country, PDO::PARAM_STR);
         $query->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
+        $query->bindParam(':rgpd', $rgpd);
+        $query->bindParam(':mailing', $mailing);
         $query->execute();
 
         echo '<script>alert("Votre profil a été mis à jour")</script>';
-        echo "<script>window.location.href ='member-profile.php'</script>";
+        echo "<script>window.location.href ='dashboard.php'</script>";
 
     }
     ?>
@@ -138,11 +149,20 @@ if (!$_SESSION['userId']) {
                                                 <label for="country">Pays</label>
                                                 <input type="text" name="country" value="<?php  echo $row->Country;?>" class="form-control">
                                             </div>
+                                            <div class="form-inline">
+                                                <label for="RGPD">Je consent à la gestion et la sauvegarde des données personnelles par l'administrateur du site</label>
+                                                <input type="checkbox" name="RGPD" value="1" class="form-inline" <?php  if ($row->RGPD == 1) { echo 'checked="checked"';}?>>
+                                            </div>
+                                            <div class="form-inline">
+                                                <label for="Mailing">J'accepte de recevoir des informations par email</label>
+                                                <input type="checkbox" name="Mailing" value="1" class="form-inline" <?php  if ($row->Mailing == 1) { echo 'checked="checked"';}?>>
+                                            </div>
                                             <?php $cnt = $cnt + 1;
                                         }
                                     } ?>
                             <button type="submit" class="btn btn-default" name="submit" id="submit">Mettre à jour
                             </button>
+                                    <input type="button" class="btn btn-warning" value="Annuler" onClick="history.back();return true;" />
                             </form>
                         </div>
                     </div>

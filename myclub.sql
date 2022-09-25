@@ -12,14 +12,16 @@ CREATE TABLE myclub_member
     PostalCode   varchar(10),
     City         varchar(120),
     Country      varchar(120),
-    BirthDate    date
+    BirthDate    date,
+    RGPD         tinyint(1),
+    Mailing      tinyint(1)
 );
 
 -- Create a first member with default credential : Username: admin  Password: Test@123
 INSERT INTO `myclub_member` (`ID`, `LastName`, `FirstName`, `Login`, `MobileNumber`, `Email`, `Password`,
-                             `Address`, `PostalCode`, `City`, `Country`, `BirthDate`)
+                             `Address`, `PostalCode`, `City`, `Country`, `BirthDate`, RGPD, mailing)
 VALUES (1, 'Doe', 'John', 'admin', '+32123456', 'john.doe@gmail.com', 'f925916e2754e5e03f75dd58a5733251',
-           , 'Place Saint Lambert 1', '4000', 'Liège', 'Belgique', '1980-01-01');
+           , 'Place Saint Lambert 1', '4000', 'Liège', 'Belgique', '1980-01-01', 1, 0);
 
 CREATE TABLE `myclub_rights`
 (

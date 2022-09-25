@@ -11,7 +11,7 @@ if (!$_SESSION['userId']) {
 
         $to=array();
 
-        $sql = "SELECT Email from myclub_member order by LastName, FirstName";
+        $sql = "SELECT Email from myclub_member where Mailing = 1";
         $query = $dbh->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -23,10 +23,11 @@ if (!$_SESSION['userId']) {
         $subject = $_POST['subject'];
         $message = $_POST['message'];
         $headers = "From:no-reply@amphiprion-durbuy.be \r\n";
-        $headers .= 'Bcc: '. implode(",", $to) . "\r\n";
+        $headers .= "Bcc: ". implode(",", $to) . "\r\n";
         $headers .= "Reply-to:" . $reply." \r\n";
         $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-type: text/html\r\n";
+        $headers .= "Content-type: text/html; charset=UTF-8 \r\n";
+        $headers .= "X-Mailer: PHP/" . phpversion();
         $ret = mail(null,$subject,$message,$headers);
 
         if ($ret) {

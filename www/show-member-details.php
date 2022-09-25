@@ -11,7 +11,7 @@ if (!$_SESSION['userId']) {
     <!DOCTYPE HTML>
     <html>
     <head>
-        <title><?php echo $siteName;?></title>
+        <title><?php echo $siteName; ?></title>
 
         <script type="application/x-javascript"> addEventListener("load", function () {
                 setTimeout(hideURLbar, 0);
@@ -46,7 +46,7 @@ if (!$_SESSION['userId']) {
         <div class="left-content">
             <div class="inner-content">
 
-                <?php include_once('includes/header.php');?>
+                <?php include_once('includes/header.php'); ?>
                 <!--//outer-wp-->
                 <div class="outter-wp">
                     <!--/sub-heard-part-->
@@ -83,7 +83,7 @@ if (!$_SESSION['userId']) {
                                             </tr>
                                             <tr class="active">
                                                 <td>Date de naissance</td>
-                                                <td><?php echo date("d/m/Y",strtotime($row->BirthDate)); ?></td>
+                                                <td><?php echo date("d/m/Y", strtotime($row->BirthDate)); ?></td>
                                             </tr>
                                             <tr class="active">
                                                 <td>Téléphone</td>
@@ -101,7 +101,28 @@ if (!$_SESSION['userId']) {
                                                 <td>Login</td>
                                                 <td><?php echo $row->Login; ?></td>
                                             </tr>
-
+                                            <tr class="active">
+                                                <td>Consent à la gestion et la sauvegarde des données personnelles par
+                                                    l'administrateur du site
+                                                </td>
+                                                <td>
+                                                    <?php if ($row->RGPD == 1) {
+                                                        echo "Oui";
+                                                    } else {
+                                                        echo "Non";
+                                                    }?>
+                                                </td>
+                                            </tr>
+                                            <tr class="active">
+                                                <td for="Mailing">Accepte de recevoir des informations par email</td>
+                                                <td>
+                                                    <?php if ($row->Mailing == 1) {
+                                                        echo "Oui";
+                                                    } else {
+                                                        echo "Non";
+                                                    }?>
+                                                </td>
+                                            </tr>
                                             <?php
                                         }
                                     } ?>
