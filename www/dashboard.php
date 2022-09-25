@@ -59,7 +59,27 @@ if (!$_SESSION['userId']) {
                 <!--custom-widgets-->
                 <div class="custom-widgets">
                     <div class="row-one">
-                        Bienvenue.
+                        <?php
+                        if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                            <div class="col-md-4 widget">
+                                <div class="stats-left ">
+                                    <?php
+                                    $sql = "SELECT ID from myclub_member";
+                                    $query = $dbh->prepare($sql);
+                                    $query->execute();
+                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                    $membersCount = $query->rowCount();
+                                    ?>
+                                    <h5>Nombre de membres dans le système</h5>
+                                </div>
+                                <div class="stats-right">
+                                    <span><?php echo htmlentities($membersCount); ?></span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div> <?php
+                        } else { ?>
+                            Bienvenue.
+                        <?php } ?>
                     </div>
                 </div>
             </div>
