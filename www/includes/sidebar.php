@@ -43,9 +43,19 @@
                 </li>
             <?php } ?>
 
+            <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MAILING']) { ?>
+                <li id="menu-academico"><a href="#"><i class="fa fa-envelope"></i> <span>Emails</span> <span
+                                class="fa fa-angle-right" style="float: right"></span></a>
+                    <ul id="menu-academico-sub">
+                        <li id="menu-academico-avaliacoes"><a href="send-email.php">Envoyer un mail aux membres</a></li>
+                    </ul>
+                </li>
+            <?php } ?>
+
             <?php if ($_SESSION['ROLE_ADMIN']) { ?>
                 <li><a href="manage-rights.php"><i class="fa fa-key"></i> <span>Gestion des droits</span></a></li>
             <?php } ?>
+
             <!--            <li><a href="manage-client.php"><i class="fa fa-table"></i> <span>Clients List</span></a></li>-->
             <!--            <li><a href="invoices.php"><i class="fa fa-file-text-o"></i> <span>Invoices</span></a></li>-->
             <!---->

@@ -72,7 +72,7 @@ if (!$_SESSION['userId']) {
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql = "SELECT * from myclub_member";
+                                    $sql = "SELECT * from myclub_member order by LastName, FirstName";
                                     $query = $dbh->prepare($sql);
                                     $query->execute();
                                     $results = $query->fetchAll(PDO::FETCH_OBJ);

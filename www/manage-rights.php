@@ -140,7 +140,7 @@ if (!$_SESSION['userId']) {
      , (select count(1) from myclub_rights r where r.member_id = m.ID and r.role_id = 'MAILING') as isMailing
      , (select count(1) from myclub_rights r where r.member_id = m.ID and r.role_id = 'MANAGER') as isManager
      , (select count(1) from myclub_rights r where r.member_id = m.ID and r.role_id = 'USER') as isUser
-    from myclub_member m";
+    from myclub_member m  order by m.LastName, m.FirstName";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
                                             $results = $query->fetchAll(PDO::FETCH_OBJ);
