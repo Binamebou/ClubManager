@@ -42,7 +42,10 @@
                     </ul>
                 </li>
             <?php } ?>
-            <!--            <li><a href="add-client.php"><i class="fa fa-user"></i> <span>Add Clients</span></a></li>-->
+
+            <?php if ($_SESSION['ROLE_ADMIN']) { ?>
+                <li><a href="manage-rights.php"><i class="fa fa-key"></i> <span>Gestion des droits</span></a></li>
+            <?php } ?>
             <!--            <li><a href="manage-client.php"><i class="fa fa-table"></i> <span>Clients List</span></a></li>-->
             <!--            <li><a href="invoices.php"><i class="fa fa-file-text-o"></i> <span>Invoices</span></a></li>-->
             <!---->

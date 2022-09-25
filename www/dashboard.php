@@ -2,14 +2,14 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
-if (strlen($_SESSION['userId'] == 0)) {
+if (!$_SESSION['userId']) {
     header('location:logout.php');
 }
 ?>
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title><?php echo $siteName;?></title>
+    <title><?php echo $siteName; ?></title>
 
     <script type="application/x-javascript"> addEventListener("load", function () {
             setTimeout(hideURLbar, 0);

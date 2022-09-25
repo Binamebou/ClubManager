@@ -17,7 +17,6 @@ if (isset($_POST['login'])) {
             $_SESSION['userId'] = $result->ID;
             $_SESSION['lastName'] = $result->LastName;
             $_SESSION['firstName'] = $result->FirstName;
-//            $_SESSION['superAdmin'] = $result->SuperAdmin;
         }
         $_SESSION['login'] = $_POST['username'];
 

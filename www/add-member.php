@@ -2,8 +2,10 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
-if (strlen($_SESSION['userId'] == 0)) {
+if (!$_SESSION['userId']) {
     header('location:logout.php');
+} else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'])) {
+    header('location:dashboard.php');
 } else {
     if (isset($_POST['submit'])) {
 
@@ -37,6 +39,10 @@ if (strlen($_SESSION['userId'] == 0)) {
 
         $LastInsertId = $dbh->lastInsertId();
         if ($LastInsertId > 0) {
+            $sql = "insert into myclub_rights(member_id, role_id) values (:id,'USER')";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':id', $LastInsertId, PDO::PARAM_STR);
+            $query->execute();
             echo '<script>alert("Le nouveau membre a été ajouté.")</script>';
             echo "<script>window.location.href ='add-member.php'</script>";
         } else {
