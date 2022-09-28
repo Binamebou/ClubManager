@@ -10,6 +10,7 @@ if (!$_SESSION['userId']) {
 <html>
 <head>
     <title><?php echo $siteName; ?></title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 
     <script type="application/x-javascript"> addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
