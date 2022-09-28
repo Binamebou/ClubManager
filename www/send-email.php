@@ -9,35 +9,23 @@ if (!$_SESSION['userId']) {
 } else {
     if (isset($_POST['submit'])) {
 
-        $to=array();
+        $reply = $_POST['respond'];
+        $subject = $_POST['subject'];
+        $message = nl2br($_POST['message']);
+        $headers = "From:Ecole de plongée Amphiprion de Durbuy <amphipu@cluster031.hosting.ovh.net> \r\n";
+        $headers .= "Reply-to:" . $reply." \r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=UTF-8 \r\n";
+        $headers .= "X-Mailer: PHP/" . phpversion();
+
 
         $sql = "SELECT Email from myclub_member where Mailing = 1";
         $query = $dbh->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_OBJ);
         foreach ($results as $row) {
-            array_push($to, $row->Email);
+            $ret = mail($row->Email,$subject,$message,$headers);
         }
-
-        $reply = $_POST['respond'];
-        $subject = $_POST['subject'];
-        $message = $_POST['message'];
-        $headers = "From:no-reply@amphiprion-durbuy.be \r\n";
-        $headers .= "Bcc: ". implode(",", $to) . "\r\n";
-        $headers .= "Reply-to:" . $reply." \r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-type: text/html; charset=UTF-8 \r\n";
-        $headers .= "X-Mailer: PHP/" . phpversion();
-        $ret = mail(null,$subject,$message,$headers);
-
-        if ($ret) {
-            echo '<script>alert("Votre mail a bien été envoyé")</script>';
-            echo "<script>window.location.href ='dashboard.php'</script>";
-        } else {
-            echo '<script>alert("L\'envoi du mail a rencontré un problème")</script>';
-            echo "<script>window.location.href ='dashboard.php'</script>";
-        }
-
 
     }
 
