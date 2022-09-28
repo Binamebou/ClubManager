@@ -11,7 +11,7 @@ if (!$_SESSION['userId']) {
 
         $reply = $_POST['respond'];
         $subject = $_POST['subject'];
-        $message = nl2br($_POST['message']);
+        $message = $_POST['message'];
         $headers = "From:Ecole de plongée Amphiprion de Durbuy <amphipu@cluster031.hosting.ovh.net> \r\n";
         $headers .= "Reply-to:" . $reply." \r\n";
         $headers .= "MIME-Version: 1.0\r\n";
@@ -60,17 +60,10 @@ if (!$_SESSION['userId']) {
         <!--Easy Pie Chart-->
         <!--skycons-icons-->
         <script src="js/skycons.js"></script>
-        <!--//skycons-icons-->
-<!--        <script src="https://cdn.tiny.cloud/1/97bdqzplhxol425w4ga2bvnyror01r8okudt24uswatxcd34/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>-->
-<!--        <script>-->
-<!--            tinymce.init({-->
-<!--                selector: 'textarea#editor',-->
-<!--                skin: 'bootstrap',-->
-<!--                plugins: 'lists, link, image, media',-->
-<!--                toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',-->
-<!--                menubar: false,-->
-<!--            });-->
-<!--        </script>-->
+
+        <script src="js/nicEdit-latest.js" type="text/javascript"></script>
+        <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+
     </head>
     <body>
     <div class="page-container">
@@ -108,7 +101,7 @@ if (!$_SESSION['userId']) {
 
                                     <div class="form-group">
                                         <label for="message">Message</label>
-                                        <textarea id="editor"  name="message" value="" class="form-control" required='true' rows="30" ></textarea>
+                                        <textarea id="editor"  name="message" value="" class="form-control" rows="10" ></textarea>
                                     </div>
 
                                     <button type="submit" class="btn btn-default" name="submit" id="submit">Envoyer</button>
@@ -117,7 +110,7 @@ if (!$_SESSION['userId']) {
                         </div>
                     </div>
                 </div>
-                <?php include_once('includes/footer.php'); ?>
+
             </div>
         </div>
         <?php include_once('includes/sidebar.php'); ?>
