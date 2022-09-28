@@ -101,7 +101,7 @@ if (!$_SESSION['userId']) {
 
                                     <div class="form-group">
                                         <label for="message">Message</label>
-                                        <textarea id="editor"  name="message" value="" class="form-control" rows="10" ></textarea>
+                                        <textarea id="editor"  name="message" value="" class="form-control" rows="10" ><br /><br /><br /><p style="font-size: 10px;">Vous pouvez gérez vos préférences de communication pour ne plus recevoir de mails en vous connectant à <a href='https://my.amphiprion-durbuy.be'>My Amphiprion</a> </p></textarea>
                                     </div>
 
                                     <button type="submit" class="btn btn-default" name="submit" id="submit">Envoyer</button>
