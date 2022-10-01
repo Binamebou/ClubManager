@@ -2,11 +2,17 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
+include('../includes/dbconstants.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'])) {
     header('location:dashboard.php');
 } else {
+
+    function generateRandomString($length = 10) {
+        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+    }
+
     if (isset($_POST['submit'])) {
 
         $crypredPassword = md5($_POST['password']);
@@ -30,6 +36,11 @@ if (!$_SESSION['userId']) {
             $mailing = 1;
         } else {
             $mailing = 0;
+        }
+        if ($_POST['SendMail']) {
+            $sendMail = 1;
+        } else {
+            $sendMail = 0;
         }
 
         $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate, RGPD, Mailing)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate,:rgpd,:mailing)";
@@ -55,6 +66,24 @@ if (!$_SESSION['userId']) {
             $query = $dbh->prepare($sql);
             $query->bindParam(':id', $LastInsertId, PDO::PARAM_STR);
             $query->execute();
+
+            if ($sendMail && $email) {
+                $reply = $constants['MAIL_RESPOND_TO'];
+                $subject = $constants['MAIL_NEW_MEMBER_SUBJECT'];
+                $message = "<p>Bonjour,</p><br />Un compte sur le site <a href='".$constants['SITE_URL']."'>".$constants['SITE_URL']."</a> vient d'être créé pour vous.<br /><br />";
+                $message .= "Il vous permet de gérer vos information personnelles et vos préférences de notifications (recevoir des emails du club ou pas par exemple)<br /><br />";
+                $message .= "Vous pouvez vous connecter avec ce login : ".$login. " et le mot de passe ".$_POST['password']."<br /><br />";
+                $message .= "Il est vivement conseillé de modifier ce mot de passe lors de votre première connexion.<br /><br />";
+                $message .= $constants['MAIL_NEW_MEMBER_FOOTER'];
+                $message .= "<br /><br />Veuillez s'il vous plaît ne pas répondre à ce mail.";
+                $headers = "From:".$constants['MAIL_FROM']." \r\n";
+                $headers .= "Reply-to:" . $reply." \r\n";
+                $headers .= "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=UTF-8 \r\n";
+                $headers .= "X-Mailer: PHP/" . phpversion();
+                $ret = mail($email,$subject,$message,$headers);
+            }
+
             echo '<script>alert("Le nouveau membre a été ajouté.")</script>';
             echo "<script>window.location.href ='add-member.php'</script>";
         } else {
@@ -69,6 +98,23 @@ if (!$_SESSION['userId']) {
     <html>
     <head>
         <?php include('includes/head.php'); ?>
+        <script>
+
+            function normalize(entry) {
+                entry = entry.replace(/[éèëê]/g, "e");
+                entry = entry.replace(/[àâä]/g, "a");
+                entry = entry.replace(/[îï]/g, "i");
+                entry = entry.replace(/[ôö]/g, "o");
+                entry = entry.replace(/[ûü]/g, "u");
+                entry = entry.replace(/[^A-Za-z0-9\.]/g, "");
+                return entry.toLowerCase();
+            }
+
+            function fillLogin() {
+                let login = document.getElementById("firstName").value + "." + document.getElementById("lastName").value;
+                document.getElementById("login").value = normalize(login)
+            }
+        </script>
     </head>
     <body>
     <div class="page-container">
@@ -96,11 +142,13 @@ if (!$_SESSION['userId']) {
 
                                     <div class="form-group">
                                         <label for="lastName">Nom</label>
-                                        <input type="text" name="lastName" value="" class="form-control" required='true'>
+                                        <input id="lastName" type="text" name="lastName" value="" class="form-control"
+                                               required='true' onchange="fillLogin()">
                                     </div>
                                     <div class="form-group">
                                         <label for="firstName">Prénom</label>
-                                        <input type="text" name="firstName" value="" class="form-control" required='true'>
+                                        <input id="firstName" type="text" name="firstName" value="" class="form-control"
+                                               required='true' onchange="fillLogin()">
                                     </div>
                                     <div class="form-group">
                                         <label for="birthDate">Date de naissance</label>
@@ -132,24 +180,36 @@ if (!$_SESSION['userId']) {
                                     </div>
                                     <div class="form-group">
                                         <label for="login">Login</label>
-                                        <input type="text" name="login" value="" class="form-control" required='true'>
+                                        <input id="login" type="text" name="login" value="" class="form-control"
+                                               required='true'>
                                     </div>
                                     <div class="form-group">
-                                        <label for="password">Mot de passe</label>
-                                        <input type="text" name="password" value="" class="form-control" required='true'>
+                                        <label for="password">Mot de passe (un mot de passe aléatoire a été généré)</label>
+                                        <input type="password" name="password" value="<?php echo generateRandomString();?>" class="form-control"
+                                               required='true'>
                                     </div>
                                     <div class="form-inline">
-                                        <label for="RGPD">Consent à la gestion et la sauvegarde des données personnelles par l'administrateur du site</label>
-                                        <input type="checkbox" name="RGPD" value="1" class="form-inline" checked="checked">
+                                        <label for="RGPD">Consent à la gestion et la sauvegarde des données personnelles
+                                            par l'administrateur du site</label>
+                                        <input type="checkbox" name="RGPD" value="1" class="form-inline"
+                                               checked="checked">
                                     </div>
                                     <div class="form-inline">
                                         <label for="Mailing">Accepte de recevoir des informations par email</label>
-                                        <input type="checkbox" name="Mailing" value="1" class="form-inline" checked="checked">
+                                        <input type="checkbox" name="Mailing" value="1" class="form-inline"
+                                               checked="checked">
+                                    </div>
+
+                                    <div class="form-inline">
+                                        <label for="SendMail">Envoyer les informations de connexion par email au nouveau membre</label>
+                                        <input type="checkbox" name="SendMail" value="1" class="form-inline"
+                                               checked="checked">
                                     </div>
 
                                     <button type="submit" class="btn btn-default" name="submit" id="submit">Ajouter
                                     </button>
-                                    <input type="button" class="btn btn-warning" value="Annuler" onClick="history.back();return true;" />
+                                    <input type="button" class="btn btn-warning" value="Annuler"
+                                           onClick="history.back();return true;"/>
                                 </form>
                             </div>
                         </div>

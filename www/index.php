@@ -3,9 +3,12 @@ session_start();
 error_reporting(0);
 include('./../includes/dbconnection.php');
 include('./../includes/dbconstants.php');
-
+require_once('utils.php');
 if (isset($_POST['login'])) {
-    $username = $_POST['username'];
+
+    $utils = new utils();
+//    $username = utils::normalize($_POST['username']);
+    $username = $utils->normalize($_POST['username']);
     $password = md5($_POST['password']);
     $sql = "SELECT * FROM myclub_member WHERE upper(Login)=upper(:username) and Password=:password";
     $query = $dbh->prepare($sql);
@@ -47,7 +50,7 @@ if (isset($_POST['login'])) {
 <div class="error_page">
 
     <div class="error-top">
-        <h2 class="inner-tittle page"><?php echo $siteName;?></h2>
+        <h2 class="inner-tittle page"><?php echo $constants['SITE_NAME'];?></h2>
         <div class="login">
 
             <div class="buttons login">
