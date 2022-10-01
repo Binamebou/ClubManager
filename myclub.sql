@@ -44,3 +44,21 @@ VALUES ('ADMIN', "A tous les droits"),
        ('MAILING', "Permet d'envoyer des mails aux membres"),
        ('MANAGER', "Permet de gérer les membres"),
        ('USER', "Permet de se connecter à l'application");
+
+
+
+create table myclub_constants
+(
+    constant_name  varchar(50)   not null
+        primary key,
+    constant_value varchar(1000) not null
+);
+
+INSERT INTO myclub_constants (constant_name, constant_value)
+VALUES ("SITE_NAME","My club manager"),
+       ("PAGE_TITLE","My club manager"),
+       ("MAIL_FROM","Mon club <monclub@mondomaine.com>"),
+       ("MAIL_RESPOND_TO","no-reply@mondomaine.com"),
+       ("SIDEBAR_HOME_NAME","My Club"),
+       ("FOOTER_COPYRIGHT","My club @2022"),
+       ("MAIL_DEFAULT_CONTENT","<br /><br /><br /><p style='font-size: 10px;'>Vous pouvez gérez vos préférences de communication pour ne plus recevoir de mails en vous connectant à <a href=''https://my.club.com''>My Club</a> </p>");

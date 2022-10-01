@@ -1,3 +1,8 @@
- <footer>
-            <p>Amphiprion Durbuy @2022</p>
-        </footer>
+<?php
+include('./../includes/dbconstants.php');
+?>
+
+<footer>
+    <p><?php echo $constants['FOOTER_COPYRIGHT'] ?></p>
+</footer>
+

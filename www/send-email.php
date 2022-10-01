@@ -2,6 +2,7 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
+include('../includes/dbconstants.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MAILING'])) {
@@ -12,7 +13,7 @@ if (!$_SESSION['userId']) {
         $reply = $_POST['respond'];
         $subject = $_POST['subject'];
         $message = $_POST['message'];
-        $headers = "From:Ecole de plongée Amphiprion de Durbuy <amphipu@cluster031.hosting.ovh.net> \r\n";
+        $headers = "From:".$constants['MAIL_FROM']." \r\n";
         $headers .= "Reply-to:" . $reply." \r\n";
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8 \r\n";
@@ -33,34 +34,7 @@ if (!$_SESSION['userId']) {
     <!DOCTYPE HTML>
     <html>
     <head>
-        <title><?php echo $siteName;?></title>
-        <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-
-        <script type="application/x-javascript"> addEventListener("load", function () {
-                setTimeout(hideURLbar, 0);
-            }, false);
-
-            function hideURLbar() {
-                window.scrollTo(0, 1);
-            } </script>
-        <!-- Bootstrap Core CSS -->
-        <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
-        <!-- Custom CSS -->
-        <link href="css/style.css" rel='stylesheet' type='text/css'/>
-        <!-- Graph CSS -->
-        <link href="css/font-awesome.css" rel="stylesheet">
-        <!-- jQuery -->
-        <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet'
-              type='text/css'>
-        <!-- lined-icons -->
-        <link rel="stylesheet" href="css/icon-font.min.css" type='text/css'/>
-        <!-- //lined-icons -->
-        <script src="js/jquery-1.10.2.min.js"></script>
-        <!--clock init-->
-        <script src="js/css3clock.js"></script>
-        <!--Easy Pie Chart-->
-        <!--skycons-icons-->
-        <script src="js/skycons.js"></script>
+        <?php include('includes/head.php'); ?>
 
         <script src="js/nicEdit-latest.js" type="text/javascript"></script>
         <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
@@ -92,7 +66,7 @@ if (!$_SESSION['userId']) {
 
                                     <div class="form-group">
                                         <label for="respond">Adresse de réponse</label>
-                                        <input type="email" name="respond" value="no-reply@amphiprion-durbuy.be" class="form-control" required='true' />
+                                        <input type="email" name="respond" value="<?php echo $constants['MAIL_RESPOND_TO'] ?>" class="form-control" required='true' />
                                     </div>
 
                                     <div class="form-group">
@@ -102,7 +76,7 @@ if (!$_SESSION['userId']) {
 
                                     <div class="form-group">
                                         <label for="message">Message</label>
-                                        <textarea id="editor"  name="message" value="" class="form-control" rows="10" ><br /><br /><br /><p style="font-size: 10px;">Vous pouvez gérez vos préférences de communication pour ne plus recevoir de mails en vous connectant à <a href='https://my.amphiprion-durbuy.be'>My Amphiprion</a> </p></textarea>
+                                        <textarea id="editor"  name="message" value="" class="form-control" rows="10" ><?php echo $constants['MAIL_DEFAULT_CONTENT'] ?></textarea>
                                     </div>
 
                                     <button type="submit" class="btn btn-default" name="submit" id="submit">Envoyer</button>

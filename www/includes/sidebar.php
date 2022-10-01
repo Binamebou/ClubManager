@@ -1,7 +1,11 @@
+<?php
+include('./../includes/dbconstants.php');
+?>
+
 <div class="sidebar-menu">
     <header class="logo">
-        <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="../dashboard.php"> <span
-                    id="logo"> <h1>Amphiprion</h1></span>
+        <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="dashboard.php"> <span
+                    id="logo"> <h3><?php echo $constants['SIDEBAR_HOME_NAME'] ?></h3></span>
             <!--<img id="logo" src="" alt="Logo"/>-->
         </a>
     </header>
