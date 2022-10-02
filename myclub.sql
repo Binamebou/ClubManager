@@ -65,3 +65,12 @@ VALUES ("SITE_NAME","My club manager"),
        ("SITE_URL","https://my.club.com"),
        ("MAIL_NEW_MEMBER_SUBJECT", "Votre compte My Club a été créé"),
        ("MAIL_NEW_MEMBER_FOOTER", "<p>Au plaisir de vous revoir</p>");
+
+CREATE TABLE `myclub_certificates`
+(
+    ID          int(10) primary key auto_increment,
+    MemberId    int(10) not null,
+    Label       varchar(120),
+    Recto       varchar(256),
+    Verso       varchar(256)
+);

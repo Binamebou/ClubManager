@@ -43,6 +43,7 @@ include('./../includes/dbconstants.php');
                     <ul id="menu-academico-sub">
                         <li id="menu-academico-avaliacoes"><a href="manage-members.php">Liste</a></li>
                         <li id="menu-academico-boletim"><a href="add-member.php">Ajouter un membre</a></li>
+                        <li id="menu-academico-boletim"><a href="add-certificate.php">Ajouter un brevet à un membre</a></li>
                     </ul>
                 </li>
             <?php } ?>
