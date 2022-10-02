@@ -35,7 +35,7 @@ if (!$_SESSION['userId']) {
                     <div class="graph-visual tables-main">
 
 
-                        <h3 class="inner-tittle two">Liste des membres</h3>
+                        <h3 class="inner-tittle two">Liste des membres</h3><a href="./members-pdf-list.php" target="_blank">Télécharger au format PDF</a>
                         <div class="graph">
                             <div class="tables">
                                 <table class="table" >
