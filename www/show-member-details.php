@@ -83,7 +83,7 @@ if (!$_SESSION['userId']) {
                                                         echo "Oui";
                                                     } else {
                                                         echo "Non";
-                                                    }?>
+                                                    } ?>
                                                 </td>
                                             </tr>
                                             <tr class="active">
@@ -93,7 +93,25 @@ if (!$_SESSION['userId']) {
                                                         echo "Oui";
                                                     } else {
                                                         echo "Non";
-                                                    }?>
+                                                    } ?>
+                                                </td>
+                                            </tr>
+                                            <tr class="active">
+                                                <td>Liste des brevets</td>
+                                                <td>
+                                                    <?php
+                                                    $id = $_GET['id'];
+                                                    $sql = "SELECT * from myclub_certificates where MemberId=:id order by Label";
+                                                    $query = $dbh->prepare($sql);
+                                                    $query->bindParam(':id', $id, PDO::PARAM_STR);
+                                                    $query->execute();
+                                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                                    if ($query->rowCount() > 0) {
+                                                        foreach ($results as $row) {
+                                                            echo $row->Label."<br />";
+                                                        }
+                                                    }
+                                                    ?>
                                                 </td>
                                             </tr>
                                             <?php

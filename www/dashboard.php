@@ -56,9 +56,30 @@ if (!$_SESSION['userId']) {
                                 </div>
                                 <div class="clearfix"></div>
                             </div> <?php
-                        } else { ?>
-                            Bienvenue.
-                        <?php } ?>
+                        } ?>
+                    </div>
+                </div>
+            </div>
+            <div class="outter-wp">
+                <div class="custom-widgets">
+                    <div class="row-one">
+                        <div class="col-md-4 widget">
+                            <div class="stats-left ">
+                                <?php
+                                $sql = "SELECT * from myclub_certificates where MemberId = :id";
+                                $query = $dbh->prepare($sql);
+                                $query->bindParam(':id', $_SESSION['userId'], PDO::PARAM_STR);
+                                $query->execute();
+                                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                $certificatesCount = $query->rowCount();
+                                ?>
+                                <h5>Nombre de brevets encodés dans le système</h5>
+                            </div>
+                            <div class="stats-right">
+                                <span><?php echo htmlentities($certificatesCount); ?></span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
                 </div>
             </div>

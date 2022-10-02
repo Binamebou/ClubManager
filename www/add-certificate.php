@@ -11,6 +11,7 @@ if (!$_SESSION['userId']) {
 
     if (isset($_POST['submit'])) {
         $id = $_POST['id'];
+        $memberId = $_POST['memberId'];
         $url = $_POST['url'];
         $ini = strpos($url, 'id=');
         $len = strpos($url, '$', $ini) - $ini;
@@ -28,8 +29,13 @@ if (!$_SESSION['userId']) {
         $certificate_verso = "http://www.adip-international.org/" . $doc->getElementsByTagName("img")[4]->getAttribute("src");
         $memberName = $_POST['memberName'];
 
+        $b64recto = base64_encode(file_get_contents($certificate_recto));
+        $b64verso = base64_encode(file_get_contents($certificate_verso));
+
+
     } else if (isset($_POST['submit2'])) {
         $id = $_POST['id'];
+        $memberId = $_POST['memberId'];
         $certificate_type = $_POST['certificate_type'];
         $certificate_recto = $_POST['certificate_recto'];
         $certificate_verso = $_POST['certificate_verso'];
@@ -37,7 +43,7 @@ if (!$_SESSION['userId']) {
 
         $sql = "insert into myclub_certificates(MemberId, Label, Recto, Verso) values (:member, :label, :recto, :verso)";
         $query = $dbh->prepare($sql);
-        $query->bindParam(':member', $id);
+        $query->bindParam(':member', $memberId, PDO::PARAM_STR);
         $query->bindParam(':label', $certificate_type, PDO::PARAM_STR);
         $query->bindParam(':recto', $certificate_recto, PDO::PARAM_STR);
         $query->bindParam(':verso', $certificate_verso, PDO::PARAM_STR);
@@ -50,10 +56,10 @@ if (!$_SESSION['userId']) {
         }
 
     } else if (isset($_POST['submit3'])) {
-        $id = $_POST['id'];
+        $memberId = $_POST['idOption'];
         $sql = "SELECT * from myclub_member where ID=:id";
         $query = $dbh->prepare($sql);
-        $query->bindParam(':id', $id, PDO::PARAM_STR);
+        $query->bindParam(':id', $memberId, PDO::PARAM_STR);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_OBJ);
         if ($query->rowCount() > 0) {
@@ -89,21 +95,21 @@ if (!$_SESSION['userId']) {
                     <!--/sub-heard-part-->
                     <!--/forms-->
                     <div class="forms-main">
-                        <h2 class="inner-tittle">Ajouter un brevet <?php if ($id) {
+                        <h2 class="inner-tittle">Ajouter un brevet <?php if ($memberName) {
                                 echo "à " . $memberName;
                             } ?></h2>
                         <div class="graph-form">
                             <div class="form-body">
                                 <form method="post">
                                     <input id="id" type="hidden" name="id" value="<?php echo $id; ?>"/>
-                                    <input id="memberName" type="hidden" name="memberName"
-                                           value="<?php echo $memberName; ?>"/>
+                                    <input id="memberId" type="hidden" name="memberId" value="<?php echo $memberId; ?>"/>
+                                    <input id="memberName" type="hidden" name="memberName" value="<?php echo $memberName; ?>"/>
                                     <?php
-                                    if (!$id) { ?>
+                                    if (!$memberId) { ?>
 
                                         <div class="form-group">
                                             <label for="id">Membre concerné</label>
-                                            <select id="id" name="id"
+                                            <select id="idOption" name="idOption"
                                                     required='true'>
                                                 <option value="">--Sélectionnez un élève--</option>
                                                 <?php
@@ -153,10 +159,12 @@ if (!$_SESSION['userId']) {
                                                    readonly="readonly">
                                         </div>
                                         <div class="form-group">
-                                            <img src="<?php echo $certificate_recto; ?>" width="300"/>
+<!--                                            <img src="--><?php //echo $certificate_recto; ?><!--" width="300"/>-->
+                                            <img src="data:image/png;base64, <?php echo $b64recto; ?>" width="300"/>
                                         </div>
                                         <div class="form-group">
-                                            <img src="<?php echo $certificate_verso; ?>" width="300"/>
+<!--                                            <img src="--><?php //echo $certificate_verso; ?><!--" width="300"/>-->
+                                            <img src="data:image/png;base64, <?php echo $b64verso; ?>" width="300"/>
                                         </div>
                                         <button type="submit" class="btn btn-default" name="submit2" id="submit2">
                                             Ajouter ce brevet
