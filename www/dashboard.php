@@ -91,7 +91,7 @@ if (!$_SESSION['userId']) {
                                 $results = $query->fetchAll(PDO::FETCH_OBJ);
                                 $certificatesCount = $query->rowCount();
                                 ?>
-                                <h5>Nombre de brevets encodés dans le système</h5>
+                                <h5>Nombre de vos brevets encodés dans le système</h5>
                             </div>
                             <div class="stats-right">
                                 <span><?php echo htmlentities($certificatesCount); ?></span>
