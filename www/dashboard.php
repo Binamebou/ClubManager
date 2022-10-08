@@ -55,6 +55,24 @@ if (!$_SESSION['userId']) {
                                     <span><?php echo htmlentities($membersCount); ?></span>
                                 </div>
                                 <div class="clearfix"></div>
+                            </div>
+                            <div class="col-md-4 widget">
+                                <div class="stats-left ">
+                                    <?php
+                                    $year = Date("Y");
+                                    $sql = "SELECT ID from myclub_membership where myclub_membership.Year = :year";
+                                    $query = $dbh->prepare($sql);
+                                    $query->bindParam(':year', $year);
+                                    $query->execute();
+                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                    $membersCount = $query->rowCount();
+                                    ?>
+                                    <h5>En ordre de cotisation pour l'année <?php echo $year; ?></h5>
+                                </div>
+                                <div class="stats-right">
+                                    <span><?php echo htmlentities($membersCount); ?></span>
+                                </div>
+                                <div class="clearfix"></div>
                             </div> <?php
                         } ?>
                     </div>
