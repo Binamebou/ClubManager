@@ -82,3 +82,5 @@ CREATE TABLE myclub_membership
     Year     int(4) not null,
     Type     varchar(20)
 );
+
+ALTER TABLE myclub_membership ADD UNIQUE year_Member_unique (MemberId, Year);

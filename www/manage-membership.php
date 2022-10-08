@@ -15,12 +15,27 @@ if (!$_SESSION['userId']) {
     }
 
     if ($_POST['idMember']) {
-        $sql = "INSERT INTO myclub_membership (MemberId, Year, Type)  values (:memberId, :year, :type)";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':memberId', $_POST['idMember'], PDO::PARAM_STR);
-        $query->bindParam(':year', $year);
-        $query->bindParam(':type', $_POST['membershipType'], PDO::PARAM_STR);
-        $query->execute();
+        try {
+            $sql = "INSERT INTO myclub_membership (MemberId, Year, Type)  values (:memberId, :year, :type)";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':memberId', $_POST['idMember'], PDO::PARAM_STR);
+            $query->bindParam(':year', $year);
+            $query->bindParam(':type', $_POST['membershipType'], PDO::PARAM_STR);
+            $success = $query->execute();
+        } catch
+        (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                $sql = "UPDATE myclub_membership set Type = :type where MemberId = :memberId and Year = :year";
+                $query = $dbh->prepare($sql);
+                $query->bindParam(':memberId', $_POST['idMember'], PDO::PARAM_STR);
+                $query->bindParam(':year', $year);
+                $query->bindParam(':type', $_POST['membershipType'], PDO::PARAM_STR);
+                $success = $query->execute();
+            } else {
+                echo '<script>alert("Un problème de mise à jour est survenu : '.$e->getMessage().'")</script>';
+                echo "<script type='text/javascript'> document.location ='manage-membership.php'; </script>";
+            }
+        }
     }
     ?>
 
@@ -55,7 +70,8 @@ if (!$_SESSION['userId']) {
                                 <td><h3 class="inner-tittle two">Cotisations</h3></td>
                                 <td>
                                     <form method="post" id="yearSelector">
-                                        <select onchange="document.getElementById('yearSelector').submit()" name="year" class="form-control form-control-sm"
+                                        <select onchange="document.getElementById('yearSelector').submit()"
+                                                name="year" class="form-control form-control-sm"
                                                 style="padding: unset;">
                                             <?php
                                             $firstYear = 2015;
@@ -103,7 +119,7 @@ if (!$_SESSION['userId']) {
                                             <option value="Annuelle">Année complète</option>
                                             <option value="Septembre">A partir de septembre</option>
                                         </select>
-                                        <button type="submit"  name="membershipSubmit" id="membershipSubmit">
+                                        <button type="submit" name="membershipSubmit" id="membershipSubmit">
                                             Ajouter
                                         </button>
                                         </select>
