@@ -64,7 +64,9 @@ VALUES ("SITE_NAME","My club manager"),
        ("MAIL_DEFAULT_CONTENT","<br /><br /><br /><p style='font-size: 10px;'>Vous pouvez gérez vos préférences de communication pour ne plus recevoir de mails en vous connectant à <a href=''https://my.club.com''>My Club</a> </p>"),
        ("SITE_URL","https://my.club.com"),
        ("MAIL_NEW_MEMBER_SUBJECT", "Votre compte My Club a été créé"),
-       ("MAIL_NEW_MEMBER_FOOTER", "<p>Au plaisir de vous revoir</p>");
+       ("MAIL_NEW_MEMBER_FOOTER", "<p>Au plaisir de vous revoir</p>"),
+       ("MAIL_NEW_PASSWORD_SUBJECT", "Votre compte My Club a été créé"),
+       ("MAIL_NEW_PASWORD_FOOTER", "<p>Au plaisir de vous revoir</p>");
 
 CREATE TABLE `myclub_certificates`
 (

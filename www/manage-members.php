@@ -79,6 +79,9 @@ if (!$_SESSION['userId']) {
                                                     <a class="tooltips"
                                                        href="delete-member.php?id=<?php echo $row->ID; ?>"><span>Supprimer</span><i
                                                                 class="lnr lnr-trash"></i></a>
+                                                    <a class="tooltips"
+                                                       href="reset-member-password.php?id=<?php echo $row->ID; ?>"><span>Password</span><i
+                                                                class="lnr lnr-sync"></i></a>
                                                 </td>
                                             </tr>
                                             <?php $cnt = $cnt + 1;
