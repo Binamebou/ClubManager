@@ -173,7 +173,7 @@ if (!$_SESSION['userId']) {
                                     }
                                     ?>
                                     <input type="button" class="btn btn-warning" value="Annuler"
-                                           onClick="history.back();return true;"/>
+                                           onClick="document.location.href='add-certificate.php'"/>
                                 </form>
                             </div>
                         </div>

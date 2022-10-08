@@ -74,3 +74,11 @@ CREATE TABLE `myclub_certificates`
     Recto       varchar(256),
     Verso       varchar(256)
 );
+
+CREATE TABLE myclub_membership
+(
+    ID       int(10) primary key auto_increment,
+    MemberId int(10) not null,
+    Year     int(4) not null,
+    Type     varchar(20)
+);

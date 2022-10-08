@@ -44,6 +44,7 @@ if (!$_SESSION['userId']) {
                                         <th></th>
                                         <th>Nom</th>
                                         <th>Prénom</th>
+                                        <th>Date de naissance</th>
                                         <th>Téléphone</th>
                                         <th>Email</th>
                                         <th></th>
@@ -67,6 +68,7 @@ if (!$_SESSION['userId']) {
                                                 </th>
                                                 <td><?php echo htmlentities($row->LastName); ?></td>
                                                 <td><?php echo htmlentities($row->FirstName); ?></td>
+                                                <td><?php echo date("d/m/Y", strtotime($row->BirthDate)); ?></td>
                                                 <td><?php echo htmlentities($row->MobileNumber); ?></td>
                                                 <td><?php echo htmlentities($row->Email); ?></td>
                                                 <td>

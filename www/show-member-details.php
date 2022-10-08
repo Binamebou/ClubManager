@@ -114,6 +114,24 @@ if (!$_SESSION['userId']) {
                                                     ?>
                                                 </td>
                                             </tr>
+                                            <tr class="active">
+                                                <td>Cotisations</td>
+                                                <td>
+                                                    <?php
+                                                    $id = $_GET['id'];
+                                                    $sql = "SELECT * from myclub_membership where MemberId=:id order by Year";
+                                                    $query = $dbh->prepare($sql);
+                                                    $query->bindParam(':id', $id, PDO::PARAM_STR);
+                                                    $query->execute();
+                                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                                    if ($query->rowCount() > 0) {
+                                                        foreach ($results as $row) {
+                                                            echo $row->Year." ".$row->Type."<br />";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </td>
+                                            </tr>
                                             <?php
                                         }
                                     } ?>
