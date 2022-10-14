@@ -14,7 +14,7 @@ if (!$_SESSION['userId']) {
         $to = $_POST['to'];
         $comment = $_POST['comment'];
 
-        $target_dir = "../documents/".utf8_decode($_SESSION['lastName'])." ".utf8_decode($_SESSION['firstName'])."/".utf8_decode($type)."/";
+        $target_dir = "../documents/".$_SESSION['lastName']." ".$_SESSION['firstName']."/".$type."/";
         mkdir($target_dir, 0755, true);
         $target_file = $target_dir . uniqid() . "." . pathinfo(basename($_FILES["file"]["name"]),PATHINFO_EXTENSION);
 
