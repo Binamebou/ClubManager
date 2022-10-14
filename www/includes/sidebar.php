@@ -37,6 +37,7 @@ include('./../includes/dbconstants.php');
         <ul id="menu">
             <li><a href="dashboard.php"><i class="fa fa-tachometer"></i> <span>Tableau de bord</span></a></li>
             <li><a href="my-certificates.php"><i class="fa fa-credit-card"></i> <span>Mes brevets</span></a></li>
+            <li><a href="my-documents.php"><i class="fa fa-paperclip"></i> <span>Mes documents</span></a></li>
 
             <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
                 <li id="menu-academico"><a href="#"><i class="fa fa-users"></i> <span>Membres</span> <span

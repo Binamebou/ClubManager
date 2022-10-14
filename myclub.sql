@@ -21,7 +21,7 @@ CREATE TABLE myclub_member
 INSERT INTO `myclub_member` (`ID`, `LastName`, `FirstName`, `Login`, `MobileNumber`, `Email`, `Password`,
                              `Address`, `PostalCode`, `City`, `Country`, `BirthDate`, RGPD, mailing)
 VALUES (1, 'Doe', 'John', 'admin', '+32123456', 'john.doe@gmail.com', 'f925916e2754e5e03f75dd58a5733251',
-           , 'Place Saint Lambert 1', '4000', 'Liège', 'Belgique', '1980-01-01', 1, 0);
+           'Place Saint Lambert 1', '4000', 'Liège', 'Belgique', '1980-01-01', 1, 0);
 
 CREATE TABLE `myclub_rights`
 (
@@ -86,3 +86,14 @@ CREATE TABLE myclub_membership
 );
 
 ALTER TABLE myclub_membership ADD UNIQUE year_Member_unique (MemberId, Year);
+
+CREATE TABLE myclub_documents
+(
+    ID          int(10) primary key auto_increment,
+    MemberId    int(10) not null,
+    Type        varchar(20) not null,
+    ValidFrom   date,
+    ValidTo     date,
+    Path        varchar(256),
+    Comment     text
+);
