@@ -84,7 +84,7 @@ if (!$_SESSION['userId']) {
                 $ret = mail($email,$subject,$message,$headers);
             }
 
-            echo "<script>window.location.href ='add-member.php'</script>";
+            echo "<script>window.location.href ='manage-members.php'</script>";
         } else {
             echo '<script>alert("Une erreur est survenue, veuillez réessayer")</script>';
         }
@@ -105,6 +105,7 @@ if (!$_SESSION['userId']) {
                 entry = entry.replace(/[îï]/g, "i");
                 entry = entry.replace(/[ôö]/g, "o");
                 entry = entry.replace(/[ûü]/g, "u");
+                entry = entry.replace(/[ç]/g, "c");
                 entry = entry.replace(/[^A-Za-z0-9\.]/g, "");
                 return entry.toLowerCase();
             }

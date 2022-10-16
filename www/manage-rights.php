@@ -50,6 +50,19 @@ if (!$_SESSION['userId']) {
             $query->execute();
         }
 
+        $role = "INSTRUCTOR";
+        $sql = "delete from myclub_rights where role_id = :role";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':role', $role, PDO::PARAM_STR);
+        $query->execute();
+        foreach ($_POST['isInstructor'] as $id) {
+            $sql = "insert into myclub_rights(member_id, role_id) values (:id, :role)";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':id', $id);
+            $query->bindParam(':role', $role, PDO::PARAM_STR);
+            $query->execute();
+        }
+
         $role = "USER";
         $sql = "delete from myclub_rights where role_id = :role";
         $query = $dbh->prepare($sql);
@@ -106,8 +119,9 @@ if (!$_SESSION['userId']) {
                                                 <th>Prénom</th>
                                                 <th>Login</th>
                                                 <th>Admin</th>
-                                                <th>Mailing</th>
+                                                <th>Mails</th>
                                                 <th>Manager</th>
+                                                <th>Instructeur</th>
                                                 <th>User</th>
                                             </tr>
                                             </thead>
@@ -119,6 +133,7 @@ if (!$_SESSION['userId']) {
      , (select count(1) from myclub_rights r where r.member_id = m.ID and r.role_id = 'MAILING') as isMailing
      , (select count(1) from myclub_rights r where r.member_id = m.ID and r.role_id = 'MANAGER') as isManager
      , (select count(1) from myclub_rights r where r.member_id = m.ID and r.role_id = 'USER') as isUser
+     , (select count(1) from myclub_rights r where r.member_id = m.ID and r.role_id = 'INSTRUCTOR') as isInstructor
     from myclub_member m  order by m.LastName, m.FirstName";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
@@ -150,6 +165,13 @@ if (!$_SESSION['userId']) {
                                                                    name="isManager[]"
                                                                    value="<?php echo $row->ID; ?>"
                                                             <?php if ($row->isManager) {
+                                                                echo "checked = 'checked'";
+                                                            } ?>" />
+                                                        </td>
+                                                        <td><input type="checkbox"
+                                                                   name="isInstructor[]"
+                                                                   value="<?php echo $row->ID; ?>"
+                                                            <?php if ($row->isInstructor) {
                                                                 echo "checked = 'checked'";
                                                             } ?>" />
                                                         </td>

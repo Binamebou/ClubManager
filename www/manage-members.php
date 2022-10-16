@@ -35,9 +35,11 @@ if (!$_SESSION['userId']) {
                     <div class="graph-visual tables-main">
 
 
-                        <h3 class="inner-tittle two">Liste des membres</h3><a href="./members-pdf-list.php"
-                                                                              target="_blank">Télécharger au format
-                            PDF</a>
+                        <h3 class="inner-tittle two">Liste des membres</h3>
+                        <a class="btn" href="./members-pdf-list.php" target="_blank">Télécharger au format PDF</a>
+                        <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                            <a class="btn btn-default" href="add-member.php">Ajouter un membre</a>
+                        <?php } ?>
                         <div class="graph">
                             <div class="tables">
                                 <table class="table">
