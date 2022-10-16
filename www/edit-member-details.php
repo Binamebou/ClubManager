@@ -45,7 +45,6 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':rgpd', $rgpd);
         $query->bindParam(':mailing', $mailing);
         $query->execute();
-        echo '<script>alert("Le membre a été mis à jour")</script>';
         echo "<script type='text/javascript'> document.location ='manage-members.php'; </script>";
     }
     ?>

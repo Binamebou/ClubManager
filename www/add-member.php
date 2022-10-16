@@ -84,7 +84,6 @@ if (!$_SESSION['userId']) {
                 $ret = mail($email,$subject,$message,$headers);
             }
 
-            echo '<script>alert("Le nouveau membre a été ajouté.")</script>';
             echo "<script>window.location.href ='add-member.php'</script>";
         } else {
             echo '<script>alert("Une erreur est survenue, veuillez réessayer")</script>';
