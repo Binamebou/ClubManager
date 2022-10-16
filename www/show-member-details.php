@@ -4,7 +4,7 @@ error_reporting(0);
 include('../includes/dbconnection.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
-} else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'])) {
+} else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR'])) {
     header('location:dashboard.php');
 } else {
     ?>
@@ -136,8 +136,52 @@ if (!$_SESSION['userId']) {
                                         }
                                     } ?>
                                 </table>
+                                <h5 class="inner-tittle">Documents du membre</h5>
+                                <table class="table">
+                                    <?php
+                                    $sql = "SELECT * from myclub_documents where MemberId=:id ORDER BY ValidFrom desc, Type";
+                                    $query = $dbh->prepare($sql);
+                                    $query->bindParam(':id', $_SESSION['userId'], PDO::PARAM_STR);
+                                    $query->execute();
+                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                    $cnt = 1;
+                                    if ($query->rowCount() > 0) { ?>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Valide ?</th>
+                                            <th>du</th>
+                                            <th>au</th>
+                                            <th>Commentaire</th>
+                                            <th></th>
+                                        </tr>
+                                        <?php
+                                        foreach ($results as $row) { ?>
+                                            <tr class="active">
+                                                <td><?php echo $row->Type; ?></td>
+                                                <td><?php if (date('Y-m-d') > $row->ValidFrom && date('Y-m-d') < $row->ValidTo) {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green'> </span>";
+                                                    } else {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red'> </span>";
+                                                    }; ?></td>
+                                                <td><?php echo $row->ValidFrom; ?></td>
+                                                <td><?php echo $row->ValidTo; ?></td>
+                                                <td><?php echo $row->Comment; ?></td>
+                                                <td>
+                                                    <a class="tooltips" target="_blank"
+                                                       href="download.php?id=<?php echo $row->ID; ?>"><span>Télécharger</span><i
+                                                                class="lnr lnr-download"></i></a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    } else { ?>
+                                        Aucun document n'est présent dans le système.
+                                        <?php
+                                    }
+                                    ?>
+                                </table>
                                 <div class="new">
-                                    <p><a href="manage-members.php">Retour vers la liste des membres</a></p>
+                                    <p><a class="btn btn-default" href="manage-members.php">Retour vers la liste des membres</a></p>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>

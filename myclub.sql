@@ -43,7 +43,8 @@ INSERT INTO `myclub_roles` (`role_name`, `description`)
 VALUES ('ADMIN', "A tous les droits"),
        ('MAILING', "Permet d'envoyer des mails aux membres"),
        ('MANAGER', "Permet de gérer les membres"),
-       ('USER', "Permet de se connecter à l'application");
+       ('USER', "Permet de se connecter à l'application"),
+       ('INSTRUCTOR', "Permet de gérer les brevets des élèves");
 
 
 

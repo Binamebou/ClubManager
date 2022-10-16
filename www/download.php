@@ -13,7 +13,7 @@ if (!$_SESSION['userId']) {
     $query->execute();
     $document = $query->fetch(PDO::FETCH_OBJ);
 
-    if (($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) || $document->MemberId == $_SESSION['userId']) {
+    if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR'] || $document->MemberId == $_SESSION['userId']) {
         $filePath = $document->Path;
         $fileName = $document->Type."-".$document->ValidFrom.".".pathinfo($filePath, PATHINFO_EXTENSION);
         if(!empty($fileName) && file_exists($filePath)) {

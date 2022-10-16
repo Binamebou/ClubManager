@@ -39,14 +39,17 @@ include('./../includes/dbconstants.php');
             <li><a href="my-certificates.php"><i class="fa fa-credit-card"></i> <span>Mes brevets</span></a></li>
             <li><a href="my-documents.php"><i class="fa fa-paperclip"></i> <span>Mes documents</span></a></li>
 
-            <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+            <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR']) { ?>
                 <li id="menu-academico"><a href="#"><i class="fa fa-users"></i> <span>Membres</span> <span
                                 class="fa fa-angle-right" style="float: right"></span></a>
                     <ul id="menu-academico-sub">
                         <li id="menu-academico-avaliacoes"><a href="manage-members.php">Liste</a></li>
-                        <li id="menu-academico-avaliacoes"><a href="manage-membership.php">Cotisations</a></li>
-                        <li id="menu-academico-boletim"><a href="add-member.php">Ajouter un membre</a></li>
-                        <li id="menu-academico-boletim"><a href="add-certificate.php">Ajouter un brevet à un membre</a></li>
+                        <li id="menu-academico-boletim"><a href="add-certificate.php">Ajouter un brevet à un membre</a>
+                        </li>
+                        <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                            <li id="menu-academico-avaliacoes"><a href="manage-membership.php">Cotisations</a></li>
+                            <li id="menu-academico-boletim"><a href="add-member.php">Ajouter un membre</a></li>
+                        <?php } ?>
                     </ul>
                 </li>
             <?php } ?>

@@ -5,7 +5,7 @@ include('../includes/dbconnection.php');
 include('../includes/dbconstants.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
-} else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'])) {
+} else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR'])) {
     header('location:dashboard.php');
 } else {
 

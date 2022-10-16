@@ -4,7 +4,7 @@ error_reporting(0);
 include('../includes/dbconnection.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
-} else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'])) {
+} else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR'])) {
     header('location:dashboard.php');
 } else {
     ?>
@@ -35,10 +35,12 @@ if (!$_SESSION['userId']) {
                     <div class="graph-visual tables-main">
 
 
-                        <h3 class="inner-tittle two">Liste des membres</h3><a href="./members-pdf-list.php" target="_blank">Télécharger au format PDF</a>
+                        <h3 class="inner-tittle two">Liste des membres</h3><a href="./members-pdf-list.php"
+                                                                              target="_blank">Télécharger au format
+                            PDF</a>
                         <div class="graph">
                             <div class="tables">
-                                <table class="table" >
+                                <table class="table">
                                     <thead>
                                     <tr>
                                         <th></th>
@@ -62,7 +64,8 @@ if (!$_SESSION['userId']) {
                                         foreach ($results as $row) { ?>
                                             <tr class="active">
                                                 <th scope="row">
-                                                    <a class="tooltips" href="show-member-details.php?id=<?php echo $row->ID; ?>">
+                                                    <a class="tooltips"
+                                                       href="show-member-details.php?id=<?php echo $row->ID; ?>">
                                                         <span>Détail</span><i class="lnr lnr-magnifier"></i>
                                                     </a>
                                                 </th>
@@ -72,16 +75,17 @@ if (!$_SESSION['userId']) {
                                                 <td><?php echo htmlentities($row->MobileNumber); ?></td>
                                                 <td><?php echo htmlentities($row->Email); ?></td>
                                                 <td>
-
-                                                    <a class="tooltips"
-                                                       href="edit-member-details.php?id=<?php echo $row->ID; ?>"><span>Modifier</span><i
-                                                                class="lnr lnr-pencil"></i></a>
-                                                    <a class="tooltips"
-                                                       href="delete-member.php?id=<?php echo $row->ID; ?>"><span>Supprimer</span><i
-                                                                class="lnr lnr-trash"></i></a>
-                                                    <a class="tooltips"
-                                                       href="reset-member-password.php?id=<?php echo $row->ID; ?>"><span>Password</span><i
-                                                                class="lnr lnr-sync"></i></a>
+                                                    <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                                                        <a class="tooltips"
+                                                           href="edit-member-details.php?id=<?php echo $row->ID; ?>"><span>Modifier</span><i
+                                                                    class="lnr lnr-pencil"></i></a>
+                                                        <a class="tooltips"
+                                                           href="delete-member.php?id=<?php echo $row->ID; ?>"><span>Supprimer</span><i
+                                                                    class="lnr lnr-trash"></i></a>
+                                                        <a class="tooltips"
+                                                           href="reset-member-password.php?id=<?php echo $row->ID; ?>"><span>Password</span><i
+                                                                    class="lnr lnr-sync"></i></a>
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
                                             <?php $cnt = $cnt + 1;
