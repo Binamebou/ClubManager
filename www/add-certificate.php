@@ -72,7 +72,7 @@ if (!$_SESSION['userId']) {
 
     ?>
     <!DOCTYPE HTML>
-    <html>
+    <html lang="fr">
     <head>
         <?php include('includes/head.php'); ?>
     </head>
@@ -108,9 +108,9 @@ if (!$_SESSION['userId']) {
                                     if (!$memberId) { ?>
 
                                         <div class="form-group">
-                                            <label for="id">Membre concerné</label>
+                                            <label for="idOption">Membre concerné</label>
                                             <select id="idOption" name="idOption"
-                                                    required='true'>
+                                                    required='required'>
                                                 <option value="">--Sélectionnez un élève--</option>
                                                 <?php
                                                 $sql = "SELECT * from myclub_member order by LastName, FirstName";
@@ -136,7 +136,7 @@ if (!$_SESSION['userId']) {
                                         <div class="form-group">
                                             <label for="url">URL du brevet à ajouter</label>
                                             <input id="url" type="text" name="url" value="" class="form-control"
-                                                   required='true'>
+                                                   required='required'>
                                         </div>
 
                                         <button type="submit" class="btn btn-default" name="submit" id="submit">Chercher
@@ -160,11 +160,11 @@ if (!$_SESSION['userId']) {
                                         </div>
                                         <div class="form-group">
 <!--                                            <img src="--><?php //echo $certificate_recto; ?><!--" width="300"/>-->
-                                            <img src="data:image/png;base64, <?php echo $b64recto; ?>" width="300"/>
+                                            <img alt="Carte recto" src="data:image/png;base64, <?php echo $b64recto; ?>" width="300"/>
                                         </div>
                                         <div class="form-group">
 <!--                                            <img src="--><?php //echo $certificate_verso; ?><!--" width="300"/>-->
-                                            <img src="data:image/png;base64, <?php echo $b64verso; ?>" width="300"/>
+                                            <img alt="carte verso" src="data:image/png;base64, <?php echo $b64verso; ?>" width="300"/>
                                         </div>
                                         <button type="submit" class="btn btn-default" name="submit2" id="submit2">
                                             Ajouter ce brevet

@@ -7,22 +7,20 @@ if (!$_SESSION['userId']) {
 }
 ?>
 <!DOCTYPE HTML>
-<html>
+<html lang="fr">
 <head>
     <?php include('includes/head.php'); ?>
     <script src="js/amcharts.js"></script>
     <script src="js/serial.js"></script>
     <script src="js/light.js"></script>
     <script src="js/radar.js"></script>
-    <link href="css/barChart.css" rel='stylesheet' type='text/css'/>
+    <link href="css/bars.css" rel='stylesheet' type='text/css'/>
     <link href="css/fabochart.css" rel='stylesheet' type='text/css'/>
     <!--clock init-->
     <script src="js/css3clock.js"></script>
     <!--Easy Pie Chart-->
     <!--skycons-icons-->
     <script src="js/skycons.js"></script>
-
-    <script src="js/jquery.easydropdown.js"></script>
 
     <!--//skycons-icons-->
 </head>

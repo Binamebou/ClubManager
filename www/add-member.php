@@ -94,7 +94,7 @@ if (!$_SESSION['userId']) {
 
     ?>
     <!DOCTYPE HTML>
-    <html>
+    <html lang="fr">
     <head>
         <?php include('includes/head.php'); ?>
         <script>
@@ -143,66 +143,66 @@ if (!$_SESSION['userId']) {
                                     <div class="form-group">
                                         <label for="lastName">Nom</label>
                                         <input id="lastName" type="text" name="lastName" value="" class="form-control"
-                                               required='true' onchange="fillLogin()">
+                                               required='required' onchange="fillLogin()">
                                     </div>
                                     <div class="form-group">
                                         <label for="firstName">Prénom</label>
                                         <input id="firstName" type="text" name="firstName" value="" class="form-control"
-                                               required='true' onchange="fillLogin()">
+                                               required='required' onchange="fillLogin()">
                                     </div>
                                     <div class="form-group">
                                         <label for="birthDate">Date de naissance</label>
-                                        <input type="date" name="birthDate" value="" class="form-control">
+                                        <input type="date" name="birthDate" id="birthDate" value="" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="mobileNumber">Téléphone</label>
-                                        <input type="text" name="mobileNumber"" value="" class="form-control" >
+                                        <input type="text" name="mobileNumber" id="mobileNumber" value="" class="form-control" >
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" name="email" value="" class="form-control" required='true'>
+                                        <input id="email" type="email" name="email" value="" class="form-control" required='required'>
                                     </div>
                                     <div class="form-group">
                                         <label for="address">Adresse</label>
-                                        <input type="text" name="address" value="" class="form-control">
+                                        <input type="text" name="address" id="address" value="" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="postalCode">Code postal</label>
-                                        <input type="text" name="postalCode" value="" class="form-control">
+                                        <input type="text" name="postalCode" id="postalCode" value="" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="city">Localité</label>
-                                        <input type="text" name="city" value="" class="form-control">
+                                        <input type="text" name="city" id="city" value="" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="country">Pays</label>
-                                        <input type="text" name="country" value="Belgique" class="form-control">
+                                        <input type="text" name="country" id="country" value="Belgique" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="login">Login</label>
                                         <input id="login" type="text" name="login" value="" class="form-control"
-                                               required='true'>
+                                               required='required'>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Mot de passe (un mot de passe aléatoire a été généré)</label>
-                                        <input type="password" name="password" value="<?php echo generateRandomString();?>" class="form-control"
-                                               required='true'>
+                                        <input id="password" type="password" name="password" value="<?php echo generateRandomString();?>" class="form-control"
+                                               required='required'>
                                     </div>
                                     <div class="form-inline">
                                         <label for="RGPD">Consent à la gestion et la sauvegarde des données personnelles
                                             par l'administrateur du site</label>
-                                        <input type="checkbox" name="RGPD" value="1" class="form-inline"
+                                        <input id="RGPD" type="checkbox" name="RGPD" value="1" class="form-inline"
                                                checked="checked">
                                     </div>
                                     <div class="form-inline">
                                         <label for="Mailing">Accepte de recevoir des informations par email</label>
-                                        <input type="checkbox" name="Mailing" value="1" class="form-inline"
+                                        <input id="Mailing" type="checkbox" name="Mailing" value="1" class="form-inline"
                                                checked="checked">
                                     </div>
 
                                     <div class="form-inline">
                                         <label for="SendMail">Envoyer les informations de connexion par email au nouveau membre</label>
-                                        <input type="checkbox" name="SendMail" value="1" class="form-inline"
+                                        <input id="SendMail" type="checkbox" name="SendMail" value="1" class="form-inline"
                                                checked="checked">
                                     </div>
 

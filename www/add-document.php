@@ -42,7 +42,7 @@ if (!$_SESSION['userId']) {
 
     ?>
     <!DOCTYPE HTML>
-    <html>
+    <html lang="fr">
     <head>
         <?php include('includes/head.php'); ?>
     </head>
@@ -72,8 +72,8 @@ if (!$_SESSION['userId']) {
 
                                     <div class="form-group">
                                         <label for="type">Type</label>
-                                        <select id="type" type="text" name="type" value="" class="form-control"
-                                               required='true' style="padding: unset;">
+                                        <select id="type" name="type" class="form-control"
+                                               required='required' style="padding: unset;">
                                             <option value="Assurance DAN">Assurance DAN</option>
                                             <option value="Certificat Médical">Certificat Médical</option>
                                             <option value="Certificat ORL">Certificat ORL</option>
@@ -92,7 +92,7 @@ if (!$_SESSION['userId']) {
                                     </div>
                                     <div class="form-group">
                                         <label for="comment">Commentaire</label>
-                                        <input type="text" name="comment" value="" class="form-control">
+                                        <input id="comment" type="text" name="comment" value="" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="file">Fichier (max 2Mb)</label>

@@ -24,4 +24,4 @@ include('./../includes/dbconstants.php');
 <!-- lined-icons -->
 <link rel="stylesheet" href="./css/icon-font.min.css" type='text/css'/>
 <!-- //lined-icons -->
-<script src="./js/jquery-1.10.2.min.js"></script>
+<script src="./js/jquery-1.12.4.min.js"></script>
