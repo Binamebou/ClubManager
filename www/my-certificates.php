@@ -46,11 +46,11 @@ if (!$_SESSION['userId']) {
                                             <tr class="active">
                                                 <td><?php echo $row->Label; ?></td>
                                                 <td>
-                                                    <img src="data:image/png;base64, <?php echo base64_encode(file_get_contents($row->Recto)); ?>"
+                                                    <img src="data:image/png;base64, <?php echo $row->Recto; ?>"
                                                          width="300"/>
                                                 </td>
                                                 <td>
-                                                    <img src="data:image/png;base64, <?php echo base64_encode(file_get_contents($row->Verso)); ?>"
+                                                    <img src="data:image/png;base64, <?php echo $row->Verso; ?>"
                                                          width="300"/>
                                                 </td>
                                             </tr>

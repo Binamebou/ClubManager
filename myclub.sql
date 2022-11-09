@@ -98,3 +98,6 @@ CREATE TABLE myclub_documents
     Path        varchar(256),
     Comment     text
 );
+
+ALTER TABLE myclub_certificates MODIFY Recto text;
+ALTER TABLE myclub_certificates MODIFY Verso text;

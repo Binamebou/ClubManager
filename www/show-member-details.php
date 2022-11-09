@@ -108,7 +108,7 @@ if (!$_SESSION['userId']) {
                                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
                                                     if ($query->rowCount() > 0) {
                                                         foreach ($results as $row) {
-                                                            echo $row->Label."<br />";
+                                                            echo "<span>".$row->Label.'</span><span><img src="data:image/png;base64, '.$row->Verso.'"width="300"/></span><br />';
                                                         }
                                                     }
                                                     ?>

@@ -14,7 +14,7 @@ if (!$_SESSION['userId']) {
         $memberId = $_POST['memberId'];
         $url = $_POST['url'];
         $ini = strpos($url, 'id=');
-        $len = strpos($url, '$', $ini) - $ini;
+        $len = strpos($url, '&', $ini) - $ini;
         $id = substr($url, $ini + 3, $len - 1);
 
         $doc = new DOMDocument();
@@ -148,9 +148,9 @@ if (!$_SESSION['userId']) {
                                         ?>
 
                                         <input id="certificate_recto" type="hidden" name="certificate_recto"
-                                               value="<?php echo $certificate_recto; ?>"/>
+                                               value="<?php echo $b64recto; ?>"/>
                                         <input id="certificate_verso" type="hidden" name="certificate_verso"
-                                               value="<?php echo $certificate_verso; ?>"/>
+                                               value="<?php echo $b64verso; ?>"/>
 
                                         <div class="form-group">
                                             <label for="certificate_type">Type de brevet</label>
