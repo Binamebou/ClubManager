@@ -12,7 +12,7 @@ if (!$_SESSION['userId']) {
     if (isset($_POST['submit'])) {
         $id = $_POST['id'];
         $memberId = $_POST['memberId'];
-        $url = $_POST['url'];
+        $url = $_POST['url']."&";
         $ini = strpos($url, 'id=');
         $len = strpos($url, '&', $ini) - $ini;
         $id = substr($url, $ini + 3, $len - 1);
