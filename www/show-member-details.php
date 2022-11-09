@@ -139,9 +139,10 @@ if (!$_SESSION['userId']) {
                                 <h5 class="inner-tittle">Documents du membre</h5>
                                 <table class="table">
                                     <?php
+                                    $id = $_GET['id'];
                                     $sql = "SELECT * from myclub_documents where MemberId=:id ORDER BY ValidFrom desc, Type";
                                     $query = $dbh->prepare($sql);
-                                    $query->bindParam(':id', $_SESSION['userId'], PDO::PARAM_STR);
+                                    $query->bindParam(':id', $id, PDO::PARAM_STR);
                                     $query->execute();
                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
                                     $cnt = 1;
