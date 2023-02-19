@@ -44,12 +44,13 @@ include('./../includes/dbconstants.php');
                                 class="fa fa-angle-right" style="float: right"></span></a>
                     <ul id="menu-academico-sub">
                         <li id="menu-academico-boletim"><a href="manage-members.php">Liste</a></li>
+                            <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                                <li id="menu-academico-boletim"><a href="manage-membership.php">Cotisations</a></li>
+                                <li id="menu-academico-boletim"><a href="add-member.php">Ajouter un membre</a></li>
+                                <li id="menu-academico-boletim"><a href="add-member-document.php">Ajouter un document à un membre</a></li>
+                            <?php } ?>
                         <li id="menu-academico-boletim"><a href="add-certificate.php">Ajouter un brevet à un membre</a>
                         </li>
-                        <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
-                            <li id="menu-academico-boletim"><a href="manage-membership.php">Cotisations</a></li>
-                            <li id="menu-academico-boletim"><a href="add-member.php">Ajouter un membre</a></li>
-                        <?php } ?>
                     </ul>
                 </li>
             <?php } ?>
