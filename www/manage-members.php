@@ -51,12 +51,20 @@ if (!$_SESSION['userId']) {
                                         <th>Date de naissance</th>
                                         <th>Téléphone</th>
                                         <th>Email</th>
+                                        <th>DAN</th>
+                                        <th>Med</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql = "SELECT * from myclub_member order by LastName, FirstName";
+                                    $sql = "SELECT *
+                                            , IFNULL((select 'OK' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
+                                               union
+                                               select 'WARN' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as DAN,
+                                           IFNULL((select 'OK' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
+                                                   union
+                                                   select 'WARN' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as MED from myclub_member order by LastName, FirstName";
                                     $query = $dbh->prepare($sql);
                                     $query->execute();
                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -76,6 +84,24 @@ if (!$_SESSION['userId']) {
                                                 <td><?php echo date("d/m/Y", strtotime($row->BirthDate)); ?></td>
                                                 <td><?php echo htmlentities($row->MobileNumber); ?></td>
                                                 <td><?php echo htmlentities($row->Email); ?></td>
+                                                <td><?php if ($row->DAN == "OK") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green'> </span>";
+                                                    } else if ($row->DAN == "WARN") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange'> </span>";
+                                                    } else if ($row->DAN == "KO") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red'> </span>";
+                                                    } else {
+                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey'> </span>";
+                                                    } ?></td>
+                                                <td><?php if ($row->MED == "OK") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green'> </span>";
+                                                    } else if ($row->MED == "WARN") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange'> </span>";
+                                                    } else if ($row->MED == "KO") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red'> </span>";
+                                                    } else {
+                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey'> </span>";
+                                                    } ?></td>
                                                 <td>
                                                     <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
                                                         <a class="tooltips"

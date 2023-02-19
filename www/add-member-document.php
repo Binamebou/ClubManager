@@ -36,7 +36,7 @@ if (!$_SESSION['userId']) {
             $query->bindParam(':Comment', $comment, PDO::PARAM_STR);
             $query->execute();
 
-            echo "<script>window.location.href ='my-documents.php'</script>";
+            echo "<script>window.location.href ='add-member-document.php'</script>";
 
         } else {
             echo '<script>alert("Un problème est survenu, réessayez plus tard.")</script>';
