@@ -7,6 +7,7 @@ if (!$_SESSION['userId']) {
 } else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR'])) {
     header('location:dashboard.php');
 } else {
+    $showArchived = $_POST['showArchived'] ? 1 : 0;
     ?>
 
     <!DOCTYPE HTML>
@@ -42,6 +43,9 @@ if (!$_SESSION['userId']) {
                         <?php } ?>
                         <div class="graph">
                             <div class="tables">
+                                <form method="post">
+                                    <input type="checkbox" name="showArchived" <?php if ($showArchived == 1) echo 'checked="checked"'; ?> onchange="this.form.submit()">  Voir aussi les membres archivés
+                                </form>
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -58,14 +62,16 @@ if (!$_SESSION['userId']) {
                                     </thead>
                                     <tbody>
                                     <?php
+                                    $activeStatus = $showArchived == 1 ? 0 : 1;
                                     $sql = "SELECT *
                                             , IFNULL((select 'OK' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
                                                union
                                                select 'WARN' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as DAN,
                                            IFNULL((select 'OK' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
                                                    union
-                                                   select 'WARN' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as MED from myclub_member order by LastName, FirstName";
+                                                   select 'WARN' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as MED from myclub_member where active >= :activeStatus order by LastName, FirstName";
                                     $query = $dbh->prepare($sql);
+                                    $query->bindParam(':activeStatus', $activeStatus);
                                     $query->execute();
                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -79,11 +85,11 @@ if (!$_SESSION['userId']) {
                                                         <span>Détail</span><i class="lnr lnr-magnifier"></i>
                                                     </a>
                                                 </th>
-                                                <td><?php echo htmlentities($row->LastName); ?></td>
-                                                <td><?php echo htmlentities($row->FirstName); ?></td>
-                                                <td><?php echo date("d/m/Y", strtotime($row->BirthDate)); ?></td>
-                                                <td><?php echo htmlentities($row->MobileNumber); ?></td>
-                                                <td><?php echo htmlentities($row->Email); ?></td>
+                                                <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->LastName); ?></td>
+                                                <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->FirstName); ?></td>
+                                                <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo date("d/m/Y", strtotime($row->BirthDate)); ?></td>
+                                                <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->MobileNumber); ?></td>
+                                                <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->Email); ?></td>
                                                 <td><?php if ($row->DAN == "OK") {
                                                         echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green'> </span>";
                                                     } else if ($row->DAN == "WARN") {
@@ -104,16 +110,25 @@ if (!$_SESSION['userId']) {
                                                     } ?></td>
                                                 <td>
                                                     <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                                                        <?php if ($row->active == 1) { ?>
                                                         <a class="tooltips"
                                                            href="edit-member-details.php?id=<?php echo $row->ID; ?>"><span>Modifier</span><i
                                                                     class="lnr lnr-pencil"></i></a>
                                                         <a class="tooltips"
-                                                           href="delete-member.php?id=<?php echo $row->ID; ?>"><span>Supprimer</span><i
+                                                           href="archive-member.php?id=<?php echo $row->ID; ?>"><span>Archiver</span><i
                                                                     class="lnr lnr-trash"></i></a>
                                                         <a class="tooltips"
                                                            href="reset-member-password.php?id=<?php echo $row->ID; ?>"><span>Password</span><i
                                                                     class="lnr lnr-sync"></i></a>
-                                                    <?php } ?>
+                                                    <?php } else { ?>
+                                                            <a class="tooltips"
+                                                               href="delete-member.php?id=<?php echo $row->ID; ?>"><span>Supprimer</span><i
+                                                                        class="lnr lnr-trash" style='color:red'></i></a>
+                                                            <a class="tooltips"
+                                                               href="restore-member.php?id=<?php echo $row->ID; ?>"><span>restaurer</span><i
+                                                                        class="lnr lnr-undo" style='color:green'></i></a>
+                                                        <?php }
+                                                    } ?>
                                                 </td>
                                             </tr>
                                             <?php $cnt = $cnt + 1;

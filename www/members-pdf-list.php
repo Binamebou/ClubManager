@@ -16,13 +16,14 @@ if (!$_SESSION['userId']) {
     {
 
         // Load table data from file
-        public function LoadData($dbh)
+        public function LoadData($dbh, $active)
         {
             $data = array();
             $i = 0;
 
-            $sql = "SELECT * from myclub_member order by LastName, FirstName";
+            $sql = "SELECT * from myclub_member where active = :active order by LastName, FirstName";
             $query = $dbh->prepare($sql);
+            $query->bindParam(':active', $active);
             $query->execute();
             $results = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -92,7 +93,7 @@ if (!$_SESSION['userId']) {
     $pdf->SetSubject('Membres au ' . date("d/m/Y"));
 
 // set default header data
-    $pdf->SetHeaderData("", 0, "Liste des membres au  " . date("d/m/Y"), "", array(0, 64, 255), array(0, 64, 128));
+    $pdf->SetHeaderData("", 0, "Liste des membres actifs au  " . date("d/m/Y"), "", array(0, 64, 255), array(0, 64, 128));
     $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
 
 // set header and footer fonts
@@ -137,7 +138,20 @@ if (!$_SESSION['userId']) {
     // column titles
     $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse');
     // data loading
-    $data = $pdf->LoadData($dbh);
+    $data = $pdf->LoadData($dbh, 1);
+    // print colored table
+    $pdf->MembersTable($header, $data);
+
+// Add a page
+// This method has several options, check the source code documentation for more information.
+    $pdf->resetHeaderTemplate();
+    $pdf->SetHeaderData("", 0, "Liste des membres archivés", "", array(0, 64, 255), array(0, 64, 128));
+    $pdf->AddPage();
+
+    // column titles
+    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse');
+    // data loading
+    $data = $pdf->LoadData($dbh, 0);
     // print colored table
     $pdf->MembersTable($header, $data);
 

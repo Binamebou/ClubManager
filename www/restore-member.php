@@ -10,31 +10,16 @@ if (!$_SESSION['userId']) {
     if (isset($_POST['submit'])) {
         $id = $_GET['id'];
 
-        $sql = "delete from myclub_certificates where MemberId=:id";
+        $sql = "insert into myclub_rights (member_id, role_id) values (:id, 'USER')";
         $query = $dbh->prepare($sql);
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->execute();
 
-        $sql = "delete from myclub_documents where MemberId=:id";
+        $sql = "update myclub_member set active = 1, Mailing = 1, LastUpdate = CURDATE() where ID=:id";
         $query = $dbh->prepare($sql);
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->execute();
-
-        $sql = "delete from myclub_membership where MemberId=:id";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':id', $id, PDO::PARAM_STR);
-        $query->execute();
-
-        $sql = "delete from myclub_rights where member_id=:id";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':id', $id, PDO::PARAM_STR);
-        $query->execute();
-
-        $sql = "delete from myclub_member where ID=:id";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':id', $id, PDO::PARAM_STR);
-        $query->execute();
-        echo '<script>alert("Le membre a été définitivement supprimé du système.")</script>';
+        echo '<script>alert("Le membre a été restauré, vous pouvez lui réenvoyer ses informations de connexion et gérer ses droits.")</script>';
         echo "<script type='text/javascript'> document.location ='manage-members.php'; </script>";
     }
     ?>
@@ -56,13 +41,13 @@ if (!$_SESSION['userId']) {
                     <div class="sub-heard-part">
                         <ol class="breadcrumb m-b-0">
                             <li><a href="dashboard.php">Accueil</a></li>
-                            <li class="active">Suppression membre</li>
+                            <li class="active">Restauration membre</li>
                         </ol>
                     </div>
                     <!--/sub-heard-part-->
                     <!--/forms-->
                     <div class="forms-main">
-                        <h2 class="inner-tittle">Suppression d'un membre</h2>
+                        <h2 class="inner-tittle">Restauration d'un membre</h2>
                         <div class="graph-form">
                             <div class="form-body">
                                 <form method="post">
@@ -75,8 +60,8 @@ if (!$_SESSION['userId']) {
                                     $member = $query->fetch(PDO::FETCH_OBJ);
 
                                     if ($member) { ?>
-                                        <h2 class="inner-tittle">Etes vous certain de vouloir supprimer définitivement le membre <?php  echo $member->FirstName . " " . $member->LastName;?> ?</h2>
-                                        <button type="submit" class="btn btn-default" name="submit" id="submit">Supprimer définitivement</button>
+                                        <h2 class="inner-tittle">Etes vous certain de vouloir restaurer le membre <?php  echo $member->FirstName . " " . $member->LastName;?> ?</h2>
+                                        <button type="submit" class="btn btn-default" name="submit" id="submit">Restaurer</button>
                                     <?php  } ?>
 
                                     <input type="button" class="btn btn-warning" value="Annuler" onClick="document.location.href='manage-members.php'" />

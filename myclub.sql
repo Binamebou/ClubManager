@@ -98,3 +98,5 @@ CREATE TABLE myclub_documents
     Path        varchar(256),
     Comment     text
 );
+
+ALTER TABLE myclub_member ADD COLUMN active tinyint(1) default 1;

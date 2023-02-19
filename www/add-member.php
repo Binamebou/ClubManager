@@ -43,7 +43,7 @@ if (!$_SESSION['userId']) {
             $sendMail = 0;
         }
 
-        $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate, RGPD, Mailing)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate,:rgpd,:mailing)";
+        $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate, RGPD, Mailing, active)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate,:rgpd,:mailing, 1)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
         $query->bindParam(':firstName', $firstName, PDO::PARAM_STR);

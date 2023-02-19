@@ -41,13 +41,13 @@ if (!$_SESSION['userId']) {
                             <div class="col-md-4 widget">
                                 <div class="stats-left ">
                                     <?php
-                                    $sql = "SELECT ID from myclub_member";
+                                    $sql = "SELECT ID from myclub_member where active = 1";
                                     $query = $dbh->prepare($sql);
                                     $query->execute();
                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
                                     $membersCount = $query->rowCount();
                                     ?>
-                                    <h5>Nombre de membres dans le système</h5>
+                                    <h5>Nombre de membres actifs dans le système</h5>
                                 </div>
                                 <div class="stats-right">
                                     <span><?php echo htmlentities($membersCount); ?></span>

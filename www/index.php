@@ -10,7 +10,7 @@ if (isset($_POST['login'])) {
 //    $username = utils::normalize($_POST['username']);
     $username = $utils->normalize($_POST['username']);
     $password = md5($_POST['password']);
-    $sql = "SELECT * FROM myclub_member WHERE upper(Login)=upper(:username) and Password=:password";
+    $sql = "SELECT * FROM myclub_member WHERE upper(Login)=upper(:username) and Password=:password and active = 1";
     $query = $dbh->prepare($sql);
     $query->bindParam(':username', $username, PDO::PARAM_STR);
     $query->bindParam(':password', $password, PDO::PARAM_STR);

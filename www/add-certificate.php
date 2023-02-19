@@ -113,7 +113,7 @@ if (!$_SESSION['userId']) {
                                                     required='required'>
                                                 <option value="">--Sélectionnez un élève--</option>
                                                 <?php
-                                                $sql = "SELECT * from myclub_member order by LastName, FirstName";
+                                                $sql = "SELECT * from myclub_member where active = 1 order by LastName, FirstName";
                                                 $query = $dbh->prepare($sql);
                                                 $query->execute();
                                                 $results = $query->fetchAll(PDO::FETCH_OBJ);
