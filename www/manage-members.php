@@ -57,6 +57,7 @@ if (!$_SESSION['userId']) {
                                         <th>Email</th>
                                         <th>DAN</th>
                                         <th>Med</th>
+                                        <th><?php echo date("Y"); ?> </th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -69,7 +70,8 @@ if (!$_SESSION['userId']) {
                                                select 'WARN' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as DAN,
                                            IFNULL((select 'OK' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
                                                    union
-                                                   select 'WARN' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as MED from myclub_member where active >= :activeStatus order by LastName, FirstName";
+                                                   select 'WARN' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as MED,
+                                           IFNULL((select 'OK' from myclub_membership where  MemberId = myclub_member.ID and Year = year(curdate())), 'KO') as COT from myclub_member where active >= :activeStatus order by LastName, FirstName";
                                     $query = $dbh->prepare($sql);
                                     $query->bindParam(':activeStatus', $activeStatus);
                                     $query->execute();
@@ -104,6 +106,15 @@ if (!$_SESSION['userId']) {
                                                     } else if ($row->MED == "WARN") {
                                                         echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange'> </span>";
                                                     } else if ($row->MED == "KO") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red'> </span>";
+                                                    } else {
+                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey'> </span>";
+                                                    } ?></td>
+                                                <td><?php if ($row->COT == "OK") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green'> </span>";
+                                                    } else if ($row->COT == "WARN") {
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange'> </span>";
+                                                    } else if ($row->COT == "KO") {
                                                         echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red'> </span>";
                                                     } else {
                                                         echo "<span class='glyphicon glyphicon-question-sign' style='color:grey'> </span>";
