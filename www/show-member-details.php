@@ -35,7 +35,7 @@ if (!$_SESSION['userId']) {
                         <h2 class="inner-tittle">Détail de la fiche d'un membre</h2>
                         <div class="graph">
                             <div class="table-responsive">
-                                <table class="table table-striped">
+                                <table class="table table-striped ">
                                     <?php
                                     $id = $_GET['id'];
                                     $sql = "SELECT * from myclub_member where ID=:id";
@@ -85,9 +85,8 @@ if (!$_SESSION['userId']) {
                                                 <td>Login</td>
                                                 <td><?php echo $row->Login; ?></td>
                                             </tr>
-                                            <tr class="active">
-                                                <td>Consent à la gestion et la sauvegarde des données personnelles par
-                                                    l'administrateur du site
+                                            <tr class="active" >
+                                                <td style="white-space:pre-wrap; word-wrap:break-word">Consent à la gestion et la sauvegarde des données personnelles par l'administrateur du site
                                                 </td>
                                                 <td>
                                                     <?php if ($row->RGPD == 1) {
@@ -98,7 +97,7 @@ if (!$_SESSION['userId']) {
                                                 </td>
                                             </tr>
                                             <tr class="active">
-                                                <td for="Mailing">Accepte de recevoir des informations par email</td>
+                                                <td for="Mailing" style="white-space:pre-wrap; word-wrap:break-word">Accepte de recevoir des informations par email</td>
                                                 <td>
                                                     <?php if ($row->Mailing == 1) {
                                                         echo "Oui";
@@ -148,7 +147,7 @@ if (!$_SESSION['userId']) {
                                     } ?>
                                 </table>
                                 <h5 class="inner-tittle">Documents du membre</h5>
-                                <table class="table">
+                                <table class="table table-striped">
                                     <?php
                                     $id = $_GET['id'];
                                     $sql = "SELECT * from myclub_documents where MemberId=:id ORDER BY ValidFrom desc, Type";
