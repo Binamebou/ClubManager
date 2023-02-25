@@ -45,7 +45,18 @@ if (!$_SESSION['userId']) {
                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
                                     $cnt = 1;
                                     if ($query->rowCount() > 0) {
-                                        foreach ($results as $row) { ?>
+                                        foreach ($results as $row) {
+
+                                            $photo = "../documents/" . $row->LastName . " " . $row->FirstName . "/photo.png";
+                                            if (file_exists($photo)) { ?>
+
+                                                <tr class="active">
+                                                    <td><a href="<?php echo $photo; ?>" download="<?php echo $row->LastName . "_" . $row->FirstName . ".png"; ?>"><img src="<?php echo $photo; ?>" height="70" width="70"></a></td>
+                                                    <td></td>
+                                                </tr>
+
+                                            <?php } ?>
+
                                             <tr class="active">
                                                 <td>Nom</td>
                                                 <td><?php echo $row->LastName; ?></td>
@@ -108,7 +119,7 @@ if (!$_SESSION['userId']) {
                                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
                                                     if ($query->rowCount() > 0) {
                                                         foreach ($results as $row) {
-                                                            echo $row->Label."<br />";
+                                                            echo $row->Label . "<br />";
                                                         }
                                                     }
                                                     ?>
@@ -126,7 +137,7 @@ if (!$_SESSION['userId']) {
                                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
                                                     if ($query->rowCount() > 0) {
                                                         foreach ($results as $row) {
-                                                            echo $row->Year." ".$row->Type."<br />";
+                                                            echo $row->Year . " " . $row->Type . "<br />";
                                                         }
                                                     }
                                                     ?>
@@ -182,7 +193,8 @@ if (!$_SESSION['userId']) {
                                     ?>
                                 </table>
                                 <div class="new">
-                                    <p><a class="btn btn-default" href="manage-members.php">Retour vers la liste des membres</a></p>
+                                    <p><a class="btn btn-default" href="manage-members.php">Retour vers la liste des
+                                            membres</a></p>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>

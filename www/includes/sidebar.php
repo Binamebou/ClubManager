@@ -14,11 +14,13 @@ include('./../includes/dbconstants.php');
     <div class="down">
         <?php
         if ($_SESSION['userId']) {
-            ?>
-            <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
-                <a href="dashboard.php"><img src="images/logo_admin.jpg" height="70" width="70"></a>
+            $photo = "../documents/" . $_SESSION['lastName'] . " " . $_SESSION['firstName'] . "/photo.png";
+            if (file_exists($photo)) { ?>
+                <a href="photo.php"><img src="<?php echo $photo; ?>" height="70" width="70"></a>
+            <?php } else if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                <a href="photo.php"><img src="images/logo_admin.jpg" height="70" width="70"></a>
             <?php } else { ?>
-                <a href="dashboard.php"><img src="images/logo.png" height="70" width="100"></a>
+                <a href="photo.php"><img src="images/logo.png" height="70" width="100"></a>
             <?php } ?>
             <a href="dashboard.php"><span
                         class=" name-caret"><?php echo $_SESSION['firstName'] . ' ' . $_SESSION['lastName']; ?></span></a>
@@ -44,11 +46,12 @@ include('./../includes/dbconstants.php');
                                 class="fa fa-angle-right" style="float: right"></span></a>
                     <ul id="menu-academico-sub">
                         <li id="menu-academico-boletim"><a href="manage-members.php">Liste</a></li>
-                            <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
-                                <li id="menu-academico-boletim"><a href="manage-membership.php">Cotisations</a></li>
-                                <li id="menu-academico-boletim"><a href="add-member.php">Ajouter un membre</a></li>
-                                <li id="menu-academico-boletim"><a href="add-member-document.php">Ajouter un document à un membre</a></li>
-                            <?php } ?>
+                        <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
+                            <li id="menu-academico-boletim"><a href="manage-membership.php">Cotisations</a></li>
+                            <li id="menu-academico-boletim"><a href="add-member.php">Ajouter un membre</a></li>
+                            <li id="menu-academico-boletim"><a href="add-member-document.php">Ajouter un document à un
+                                    membre</a></li>
+                        <?php } ?>
                         <li id="menu-academico-boletim"><a href="add-certificate.php">Ajouter un brevet à un membre</a>
                         </li>
                     </ul>
