@@ -16,7 +16,7 @@ include('./../includes/dbconstants.php');
         if ($_SESSION['userId']) {
             $photo = "../documents/" . $_SESSION['lastName'] . " " . $_SESSION['firstName'] . "/photo.png";
             if (file_exists($photo)) { ?>
-                <a href="photo.php"><img src="<?php echo $photo; ?>" height="70" width="70" title="Cliquez pour modifier votre photo"></a>
+                <a href="photo.php"><img src="<?php echo $photo."?".uniqid(); ?>" height="70" width="70" title="Cliquez pour modifier votre photo"></a>
             <?php } else if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
                 <a href="photo.php"><img src="images/logo_admin.jpg" height="70" width="70"></a>
             <?php } else { ?>
