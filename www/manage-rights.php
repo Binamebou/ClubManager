@@ -111,8 +111,8 @@ if (!$_SESSION['userId']) {
                         <div class="graph-form">
                             <div class="form-body">
                                 <form method="post">
-                                    <div class="tables">
-                                        <table class="table">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
                                             <thead>
                                             <tr>
                                                 <th>Nom</th>

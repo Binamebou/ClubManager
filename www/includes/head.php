@@ -13,6 +13,10 @@ include('./../includes/dbconstants.php');
         window.scrollTo(0, 1);
     } </script>
 <!-- Bootstrap Core CSS -->
+<meta name="HandheldFriendly" content="True" />
+<meta name="MobileOptimized" content="320" />
+<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0" />
+
 <link href="./css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
 <!-- Custom CSS -->
 <link href="./css/style.css" rel='stylesheet' type='text/css'/>

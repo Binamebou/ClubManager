@@ -10,7 +10,6 @@ if (!$_SESSION['userId']) {
     <html>
     <head>
         <?php include('includes/head.php'); ?>
-        <link rel="stylesheet" href="css/bootstrap-4.1.1.min.css">
         <link rel="stylesheet" href="css/croppie.min.css">
         <script src="js/jquery-3.3.1-min.js"></script>
         <script src="js/croppie-2.6.2.js"></script>

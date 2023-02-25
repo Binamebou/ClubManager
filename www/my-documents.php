@@ -57,8 +57,8 @@ if (!$_SESSION['userId']) {
                         <h2 class="inner-tittle">Liste de mes documents</h2>
                         <a href="add-document.php">Ajouter un document</a>
                         <div class="graph">
-                            <div class="tables">
-                                <table class="table">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
                                     <?php
                                     $sql = "SELECT * from myclub_documents where MemberId=:id ORDER BY ValidFrom desc, Type";
                                     $query = $dbh->prepare($sql);

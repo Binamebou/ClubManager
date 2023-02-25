@@ -34,8 +34,8 @@ if (!$_SESSION['userId']) {
                     <div class="graph-visual tables-main">
                         <h2 class="inner-tittle">Détail de la fiche d'un membre</h2>
                         <div class="graph">
-                            <div class="tables">
-                                <table class="table">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
                                     <?php
                                     $id = $_GET['id'];
                                     $sql = "SELECT * from myclub_member where ID=:id";

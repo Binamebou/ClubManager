@@ -42,11 +42,11 @@ if (!$_SESSION['userId']) {
                             <a class="btn btn-default" href="add-member.php">Ajouter un membre</a>
                         <?php } ?>
                         <div class="graph">
-                            <div class="tables">
+                            <div class="table-responsive">
                                 <form method="post">
                                     <input type="checkbox" name="showArchived" <?php if ($showArchived == 1) echo 'checked="checked"'; ?> onchange="this.form.submit()">  Voir aussi les membres archivés
                                 </form>
-                                <table class="table">
+                                <table class="table table-striped">
                                     <thead>
                                     <tr>
                                         <th></th>

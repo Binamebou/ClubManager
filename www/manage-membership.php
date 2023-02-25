@@ -91,7 +91,7 @@ if (!$_SESSION['userId']) {
                         </table>
 
                         <div class="graph">
-                            <div class="tables">
+                            <div class="table-responsive">
                                 <form method="post" id="addMember">
                                     <input type="hidden" name="year" value="<?php echo $year; ?>">
                                     <div class="form-group form-inline">
@@ -132,7 +132,7 @@ if (!$_SESSION['userId']) {
                                 $query->execute();
                                 $results = $query->fetchAll(PDO::FETCH_OBJ);
                                 if ($query->rowCount() > 0) { ?>
-                                    <table class="table">
+                                    <table class="table table-striped">
                                         <thead>
                                         <tr>
                                             <th></th>
