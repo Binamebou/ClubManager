@@ -21,7 +21,6 @@ if (!$_SESSION['userId']) {
     <!--Easy Pie Chart-->
     <!--skycons-icons-->
     <script src="js/skycons.js"></script>
-
     <!--//skycons-icons-->
 </head>
 <body>

@@ -40,25 +40,34 @@ if (!$_SESSION['userId']) {
 
 
                                 <div class="container">
-                                        <div class="card-body">
-                                            <div class="row" style="padding:5%;">
-                                                <div class="col-md-4 text-center">
-                                                    <input type="file" id="image" required onchange="document.getElementById('ok_button').disabled=false;">
-                                                </div>
+                                    <div class="card-body">
+                                        <div class="row" style="padding:5%;">
+                                            <div class="col-md-4 text-center">
+                                                <input type="file" id="image" required
+                                                       onchange="document.getElementById('ok_button').disabled=false;">
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-4 text-center">
-                                                    <div id="upload-demo"></div>
-                                                </div>
-                                                <div class="col-md-4" style="padding:5%;">
-                                                    <br>
-                                                    <button class="btn btn-success btn-block btn-upload-image" style="margin-top:2%" disabled="disabled" id="ok_button"  onClick="document.location.href='dashboard.php'">
-                                                        Définir comme photo de profil
-                                                    </button>
-                                                    <input type="button" class="btn btn-warning" value="Annuler" onClick="document.location.href='member-profile.php'" />
-
-                                                </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 text-center">
+                                                <div id="upload-demo"></div>
                                             </div>
+                                            <div class="col-md-4" style="padding:5%;" id="photo_selection">
+                                                <br>
+                                                <button class="btn btn-success btn-block btn-upload-image"
+                                                        style="margin-top:2%" disabled="disabled" id="ok_button">
+                                                    Définir comme photo de profil
+                                                </button>
+                                                <input type="button" class="btn btn-warning" value="Annuler"
+                                                       onClick="document.location.href='member-profile.php'"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" id="wait_panel" hidden="true">
+                                        <div class="row">
+                                            <div class="col-md-4 text-center">
+                                                Veuillez patienter
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -106,6 +115,9 @@ if (!$_SESSION['userId']) {
 
 
         $('.btn-upload-image').on('click', function (ev) {
+            document.getElementById('photo_selection').hidden = true;
+            document.getElementById('wait_panel').hidden = false;
+            document.getElementById('image').disabled = true;
             resize.croppie('result', {
                 type: 'canvas',
                 size: 'viewport'
@@ -118,6 +130,8 @@ if (!$_SESSION['userId']) {
                         html = '<img src="' + img + '" />';
                         $("#preview-crop-image").html(html);
                     }
+                }).done(function(){
+                    document.location = 'dashboard.php';
                 });
             });
         });

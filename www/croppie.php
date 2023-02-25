@@ -11,7 +11,9 @@ if (!$_SESSION['userId']) {
     list(, $image) = explode(',', $image);
 
     $image = base64_decode($image);
-    $image_path = "../documents/" . $_SESSION['lastName'] . " " . $_SESSION['firstName'] . "/photo.png";
+    $target_dir = "../documents/" . $_SESSION['lastName'] . " " . $_SESSION['firstName'] . "/";
+    mkdir($target_dir, 0755, true);
+    $image_path = $target_dir . "/photo.png";
     file_put_contents($image_path, $image);
     echo 'Image sauvegardée';
 }
