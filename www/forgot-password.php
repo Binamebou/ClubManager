@@ -2,7 +2,16 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
+
+if (isset($_POST['submit'])) {
+    $userName = $_POST['userName'];
+
+
+}
+
+
 ?>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -10,26 +19,45 @@ include('../includes/dbconnection.php');
     <?php include('includes/head.php'); ?>
 </head>
 <body>
-<div class="error_page">
-
-    <div class="error-top">
-        <h2 class="inner-tittle page"><?php echo $siteName;?></h2>
-        <div class="login">
-
-            <div class="buttons login">
-                <h3 class="inner-tittle t-inner" style="color: lightblue">Veuillez contacter le secrétaire du club</h3>
-            </div>
-            <div class="new">
-                <p><a href="/index.php">Retour vers l'accueil</a></p>
+<div class="page-container">
+    <div class="inner-content">
+        <div class="header-section">
+            <div class="top_menu">
+                <div class="profile_details_drop">
+                    <div class="text-center"><p class="panel-title">Mot de passe oublié<br/></p></div>
+                </div>
                 <div class="clearfix"></div>
             </div>
+            <div class="clearfix"></div>
         </div>
+        <div class="clearfix"></div>
 
+        <div class="outter-wp">
+            <div class="forms-main">
+                <div class="graph-form" style="width: 50%">
+                    <div class="form-body">
+                        <form method="post">
+                            <div class="form-group">
+                                <label for="lastName">Veuillez encoder votre nom d'utilisateur</label>
+                                <input id="userName" type="text" name="userName" value="" class="form-control"
+                                       required='required'>
+                            </div>
 
+                            <button type="submit" class="btn btn-default" name="submit" id="submit">Demander un nouveau
+                                mot
+                                de passe
+                            </button>
+                            <input type="button" class="btn btn-warning" value="Annuler"
+                                   onClick="document.location ='index.php';"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-
-    <!--//login-top-->
+<!--//login-top-->
 </div>
 
 <!--//login-->

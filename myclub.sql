@@ -102,3 +102,11 @@ CREATE TABLE myclub_documents
 ALTER TABLE myclub_member ADD COLUMN active tinyint(1) default 1;
 ALTER TABLE myclub_certificates MODIFY Recto text;
 ALTER TABLE myclub_certificates MODIFY Verso text;
+
+CREATE TABLE myclub_password_recovery
+(
+    ID          int(10) primary key auto_increment,
+    RequestTime timestamp DEFAULT current_timestamp(),
+    UniqueURL   varchar(256),
+    UserId      int(10)
+);
