@@ -37,10 +37,11 @@ if (!$_SESSION['userId']) {
 
 
                         <h3 class="inner-tittle two">Liste des membres</h3>
-                        <a class="btn" href="./members-pdf-list.php" target="_blank">Télécharger au format PDF</a>
                         <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
                             <a class="btn btn-default" href="add-member.php">Ajouter un membre</a>
                         <?php } ?>
+                        <a href="./members-pdf-list.php" target="_blank"><img src="pdf/pdf1.png" alt="Télécharger au format PDF" style="width: 30px; height: 40px;"></a>
+                        <a href="./members-xls-list.php" target="_blank"><img src="xls/xls1.png" alt="Télécharger au format Excel" style="width: 60px; height: 50px;"></a>
                         <div class="graph">
                             <div class="table-responsive">
                                 <form method="post">
@@ -122,22 +123,22 @@ if (!$_SESSION['userId']) {
                                                 <td>
                                                     <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
                                                         <?php if ($row->active == 1) { ?>
-                                                        <a class="tooltips"
-                                                           href="edit-member-details.php?id=<?php echo $row->ID; ?>"><span>Modifier</span><i
+                                                            <a class="tooltips"
+                                                               href="edit-member-details.php?id=<?php echo $row->ID; ?>"><span>Modifier</span><i
                                                                     class="lnr lnr-pencil"></i></a>
-                                                        <a class="tooltips"
-                                                           href="archive-member.php?id=<?php echo $row->ID; ?>"><span>Archiver</span><i
+                                                            <a class="tooltips"
+                                                               href="archive-member.php?id=<?php echo $row->ID; ?>"><span>Archiver</span><i
                                                                     class="lnr lnr-trash"></i></a>
-                                                        <a class="tooltips"
-                                                           href="reset-member-password.php?id=<?php echo $row->ID; ?>"><span>Password</span><i
+                                                            <a class="tooltips"
+                                                               href="reset-member-password.php?id=<?php echo $row->ID; ?>"><span>Password</span><i
                                                                     class="lnr lnr-sync"></i></a>
-                                                    <?php } else { ?>
+                                                        <?php } else { ?>
                                                             <a class="tooltips"
                                                                href="delete-member.php?id=<?php echo $row->ID; ?>"><span>Supprimer</span><i
-                                                                        class="lnr lnr-trash" style='color:red'></i></a>
+                                                                    class="lnr lnr-trash" style='color:red'></i></a>
                                                             <a class="tooltips"
                                                                href="restore-member.php?id=<?php echo $row->ID; ?>"><span>restaurer</span><i
-                                                                        class="lnr lnr-undo" style='color:green'></i></a>
+                                                                    class="lnr lnr-undo" style='color:green'></i></a>
                                                         <?php }
                                                     } ?>
                                                 </td>
