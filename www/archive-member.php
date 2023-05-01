@@ -15,7 +15,7 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->execute();
 
-        $sql = "update myclub_member set active = 0, Mailing = 0, RGPD = 0, LastUpdate = CURDATE() where ID=:id";
+        $sql = "update myclub_member set active = 0, LastUpdate = CURDATE() where ID=:id";
         $query = $dbh->prepare($sql);
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->execute();
