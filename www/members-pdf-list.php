@@ -21,7 +21,13 @@ if (!$_SESSION['userId']) {
             $data = array();
             $i = 0;
 
-            $sql = "SELECT * from myclub_member where active = :active order by LastName, FirstName";
+            $sql = "SELECT *, IFNULL((select 'ok' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
+                                               union
+                                               select 'ok-' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), '-') as DAN,
+                                           IFNULL((select 'ok' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
+                                                   union
+                                                   select 'ok-' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), '-') as MED,
+                                           IFNULL((select 'ok' from myclub_membership where  MemberId = myclub_member.ID and Year = year(curdate())), '-') as COT from myclub_member where active = :active order by LastName, FirstName";
             $query = $dbh->prepare($sql);
             $query->bindParam(':active', $active);
             $query->execute();
@@ -40,7 +46,10 @@ if (!$_SESSION['userId']) {
                     $data[$i][2] = date("d/m/Y", strtotime($row->BirthDate));
                     $data[$i][3] = $row->MobileNumber;
                     $data[$i][4] = $row->Email;
-                    $data[$i][5] = $row->Address . ", " . $row->PostalCode . " " . $row->City . " (" . $row->Country . ")";
+                    $data[$i][5] = $row->Address . "\n" . $row->PostalCode . " " . $row->City . " (" . $row->Country . ")";
+                    $data[$i][6] = $row->COT;
+                    $data[$i][7] = $row->DAN;
+                    $data[$i][8] = $row->MED;
                     $i++;
                 }
             }
@@ -57,7 +66,7 @@ if (!$_SESSION['userId']) {
             $this->SetLineWidth(0.3);
             $this->SetFont('', 'B');
             // Header
-            $w = array(40, 35, 20, 30, 52, 90);
+            $w = array(40, 35, 20, 30, 52, 75, 10, 10, 10);
             $num_headers = count($header);
             for ($i = 0; $i < $num_headers; ++$i) {
                 $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
@@ -70,12 +79,15 @@ if (!$_SESSION['userId']) {
             // Data
             $fill = 0;
             foreach ($data as $row) {
-                $this->Cell($w[0], 6, $row[0], 'LR', 0, 'L', $fill);
-                $this->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill);
-                $this->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill);
-                $this->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill);
-                $this->Cell($w[4], 6, $row[4], 'LR', 0, 'L', $fill);
-                $this->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill);
+                $this->Cell($w[0], 10, $row[0], 'LR', 0, 'L', $fill);
+                $this->Cell($w[1], 10, $row[1], 'LR', 0, 'L', $fill);
+                $this->Cell($w[2], 10, $row[2], 'LR', 0, 'L', $fill);
+                $this->Cell($w[3], 10, $row[3], 'LR', 0, 'L', $fill);
+                $this->Cell($w[4], 10, $row[4], 'LR', 0, 'L', $fill);
+                $this->MultiCell($w[5], 10, $row[5], 'LR', 'L', $fill, 0);
+                $this->Cell($w[6], 10, $row[6], 'LR', 0, 'L', $fill);
+                $this->Cell($w[7], 10, $row[7], 'LR', 0, 'L', $fill);
+                $this->Cell($w[8], 10, $row[8], 'LR', 0, 'L', $fill);
                 $this->Ln();
                 $fill = !$fill;
             }
@@ -133,10 +145,11 @@ if (!$_SESSION['userId']) {
     $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
 
     $pdf->Text(15,18,"(*) Ajouté ou modifié dans les 30 derniers jours");
+    $pdf->Text(200,18,"'ok' = en ordre    'ok-' expire bientôt    '-' pas en ordre");
     $pdf->ln();
 
     // column titles
-    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse');
+    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Cot', 'Ass', 'Med');
     // data loading
     $data = $pdf->LoadData($dbh, 1);
     // print colored table
@@ -149,7 +162,7 @@ if (!$_SESSION['userId']) {
     $pdf->AddPage();
 
     // column titles
-    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse');
+    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Cot', 'Ass', 'Med');
     // data loading
     $data = $pdf->LoadData($dbh, 0);
     // print colored table
