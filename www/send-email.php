@@ -19,8 +19,12 @@ if (!$_SESSION['userId']) {
         $headers .= "Content-type: text/html; charset=UTF-8 \r\n";
         $headers .= "X-Mailer: PHP/" . phpversion();
 
+        if ($_POST['inactive']) {
+            $sql = "SELECT Email from myclub_member where Mailing = 1";
+        } else {
+            $sql = "SELECT Email from myclub_member where Mailing = 1 and active = 1";
+        }
 
-        $sql = "SELECT Email from myclub_member where Mailing = 1";
         $query = $dbh->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -63,6 +67,11 @@ if (!$_SESSION['userId']) {
                         <div class="graph-form">
                             <div class="form-body">
                                 <form action="" method="post">
+
+                                    <div class="form-group">
+                                        <input id='inactive' type="checkbox" name="inactive" value="inactive"/>
+                                        <label for="inactive">Envoyer aussi aux membres archivés</label>
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="respond">Adresse de réponse</label>
