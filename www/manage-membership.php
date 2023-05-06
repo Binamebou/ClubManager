@@ -117,7 +117,7 @@ if (!$_SESSION['userId']) {
                                                 style="padding: unset;">
                                             <option value="">--Sélectionnez un type de cotisation--</option>
                                             <option value="Annuelle">Année complète</option>
-                                            <option value="Septembre">A partir de septembre</option>
+                                            <option value="Piscine">Uniquement pour nager en piscine</option>
                                         </select>
                                         <button type="submit" name="membershipSubmit" id="membershipSubmit">
                                             Ajouter
