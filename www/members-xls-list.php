@@ -40,6 +40,8 @@ if (!$_SESSION['userId']) {
             $dataActive[$i][10] = $row->COT;
             $dataActive[$i][11] = $row->DAN;
             $dataActive[$i][12] = $row->MED;
+            $dataActive[$i][13] = $row->MemberType;
+            $dataActive[$i][14] = date("d/m/Y", strtotime($row->ArrivalDate));
             $i++;
         }
     }
@@ -82,6 +84,8 @@ if (!$_SESSION['userId']) {
         'Cotisation'=>'string',
         'Assurance'=>'string',
         'Certificat médical'=>'string',
+        'Type de membre'=>'string',
+        'Arrivée au club'=>'string',
     );
 
     $activeMembersTitle = 'Membres actifs au '. date("d/m/Y");

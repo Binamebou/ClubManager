@@ -19,6 +19,8 @@ if (!$_SESSION['userId']) {
         $city = $_POST['city'];
         $country = $_POST['country'];
         $birthDate = $_POST['birthDate'];
+        $arrivalDate = $_POST['arrivalDate'];
+        $memberType = $_POST['memberType'];
         if ($_POST['RGPD']) {
             $rgpd = 1;
         } else {
@@ -30,7 +32,7 @@ if (!$_SESSION['userId']) {
             $mailing = 0;
         }
 
-        $sql = "update myclub_member set LastName=:lastName, FirstName=:firstName, MobileNumber=:mobileNumber, Email=:email, Address=:address, PostalCode=:postalCode, City=:city, Country=:country, BirthDate=:birthDate, RGPD=:rgpd, Mailing=:mailing, LastUpdate=current_timestamp() where ID=:id";
+        $sql = "update myclub_member set LastName=:lastName, FirstName=:firstName, MobileNumber=:mobileNumber, Email=:email, Address=:address, PostalCode=:postalCode, City=:city, Country=:country, BirthDate=:birthDate, ArrivalDate=:arrivalDate, MemberType=:memberType, RGPD=:rgpd, Mailing=:mailing, LastUpdate=current_timestamp() where ID=:id";
         $query = $dbh->prepare($sql);
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
@@ -42,6 +44,8 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':city', $city, PDO::PARAM_STR);
         $query->bindParam(':country', $country, PDO::PARAM_STR);
         $query->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
+        $query->bindParam(':arrivalDate', $arrivalDate, PDO::PARAM_STR);
+        $query->bindParam(':memberType', $memberType, PDO::PARAM_STR);
         $query->bindParam(':rgpd', $rgpd);
         $query->bindParam(':mailing', $mailing);
         $query->execute();
@@ -121,6 +125,18 @@ if (!$_SESSION['userId']) {
                                             <div class="form-group">
                                                 <label for="country">Pays</label>
                                                 <input type="text" name="country" value="<?php  echo $row->Country;?>" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="arrivalDate">Date d'arrivée au club</label>
+                                                <input type="date" name="arrivalDate" id="arrivalDate" value="<?php  echo $row->ArrivalDate;?>" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="memberType">Type de membre</label>
+                                                <select id="memberType" name="memberType" class="form-control"
+                                                        required='required' style="padding: unset;">
+                                                    <option <?php if($row->MemberType == "Adhérent") echo 'selected="true"';?> value="Adhérent">Adhérent</option>
+                                                    <option <?php if($row->MemberType == "Effectif") echo 'selected="true"';?> value="Effectif">Effectif</option>
+                                                </select>
                                             </div>
                                             <div class="form-inline">
                                                 <label for="RGPD">Consent à la gestion et la sauvegarde des données personnelles par l'administrateur du site</label>

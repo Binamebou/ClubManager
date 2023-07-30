@@ -82,6 +82,14 @@ if (!$_SESSION['userId']) {
                                                 <td><?php echo $row->Address . ' , ' . $row->PostalCode . ' ' . $row->City . ' (' . $row->Country . ')'; ?></td>
                                             </tr>
                                             <tr class="active">
+                                                <td>Date d'arrivée au club</td>
+                                                <td><?php echo date("d/m/Y", strtotime($row->ArrivalDate)); ?></td>
+                                            </tr>
+                                            <tr class="active">
+                                                <td>Type de membre</td>
+                                                <td><?php echo $row->MemberType; ?></td>
+                                            </tr>
+                                            <tr class="active">
                                                 <td>Login</td>
                                                 <td><?php echo $row->Login; ?></td>
                                             </tr>
