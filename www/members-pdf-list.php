@@ -50,7 +50,7 @@ if (!$_SESSION['userId']) {
                     $data[$i][6] = $row->COT;
                     $data[$i][7] = $row->DAN;
                     $data[$i][8] = $row->MED;
-                    $data[$i][9] = substr($row->MemberType,0,3) . "\n" .date("m/y", strtotime($row->ArrivalDate));
+                    $data[$i][9] = $row->ArrivalDate == null ? " " : substr($row->MemberType,0,3) . "\n" .date("m/y", strtotime($row->ArrivalDate));
                     $i++;
                 }
             }
