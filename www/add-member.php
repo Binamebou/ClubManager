@@ -27,6 +27,8 @@ if (!$_SESSION['userId']) {
         $city = $_POST['city'];
         $country = $_POST['country'];
         $birthDate = $_POST['birthDate'];
+        $arrivalDate = $_POST['arrivalDate'];
+        $memberType = $_POST['memberType'];
         if ($_POST['RGPD']) {
             $rgpd = 1;
         } else {
@@ -43,7 +45,7 @@ if (!$_SESSION['userId']) {
             $sendMail = 0;
         }
 
-        $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate, RGPD, Mailing, active)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate,:rgpd,:mailing, 1)";
+        $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate, ArrivalDate, MemberType, RGPD, Mailing, active)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate,:arrivalDate,:memberType,:rgpd,:mailing, 1)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
         $query->bindParam(':firstName', $firstName, PDO::PARAM_STR);
@@ -56,6 +58,8 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':city', $city, PDO::PARAM_STR);
         $query->bindParam(':country', $country, PDO::PARAM_STR);
         $query->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
+        $query->bindParam(':arrivalDate', $arrivalDate, PDO::PARAM_STR);
+        $query->bindParam(':memberType', $memberType, PDO::PARAM_STR);
         $query->bindParam(':rgpd', $rgpd);
         $query->bindParam(':mailing', $mailing);
         $query->execute();
@@ -177,6 +181,18 @@ if (!$_SESSION['userId']) {
                                     <div class="form-group">
                                         <label for="country">Pays</label>
                                         <input type="text" name="country" id="country" value="Belgique" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="arrivalDate">Date d'arrivée au club</label>
+                                        <input type="date" name="arrivalDate" id="arrivalDate" value="" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="memberType">Type de membre</label>
+                                        <select id="memberType" name="memberType" class="form-control"
+                                                required='required' style="padding: unset;">
+                                            <option selected="true" value="Adhérent">Adhérent</option>
+                                            <option value="Effectif">Effectif</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="login">Login</label>

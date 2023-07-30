@@ -102,3 +102,6 @@ CREATE TABLE myclub_documents
 ALTER TABLE myclub_member ADD COLUMN active tinyint(1) default 1;
 ALTER TABLE myclub_certificates MODIFY Recto text;
 ALTER TABLE myclub_certificates MODIFY Verso text;
+
+ALTER TABLE myclub_member ADD COLUMN ArrivalDate date;
+ALTER TABLE myclub_member ADD COLUMN MemberType varchar(20);

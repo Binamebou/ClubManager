@@ -50,6 +50,7 @@ if (!$_SESSION['userId']) {
                     $data[$i][6] = $row->COT;
                     $data[$i][7] = $row->DAN;
                     $data[$i][8] = $row->MED;
+                    $data[$i][9] = substr($row->MemberType,0,3) . "\n" .date("m/y", strtotime($row->ArrivalDate));
                     $i++;
                 }
             }
@@ -64,9 +65,9 @@ if (!$_SESSION['userId']) {
             $this->SetTextColor(255);
             $this->SetDrawColor(0, 37, 97);
             $this->SetLineWidth(0.3);
-            $this->SetFont('', 'B');
+            $this->SetFont('', 'B', 7);
             // Header
-            $w = array(40, 35, 20, 30, 52, 75, 10, 10, 10);
+            $w = array(38, 32, 18, 30, 50, 70, 8, 8, 8, 10);
             $num_headers = count($header);
             for ($i = 0; $i < $num_headers; ++$i) {
                 $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
@@ -75,7 +76,7 @@ if (!$_SESSION['userId']) {
             // Color and font restoration
             $this->SetFillColor(224, 235, 255);
             $this->SetTextColor(0);
-            $this->SetFont('');
+            $this->SetFont('', '', 7);
             // Data
             $fill = 0;
             foreach ($data as $row) {
@@ -88,6 +89,7 @@ if (!$_SESSION['userId']) {
                 $this->Cell($w[6], 10, $row[6], 'LR', 0, 'L', $fill);
                 $this->Cell($w[7], 10, $row[7], 'LR', 0, 'L', $fill);
                 $this->Cell($w[8], 10, $row[8], 'LR', 0, 'L', $fill);
+                $this->MultiCell($w[9], 10, $row[9], 'LR', 'L', $fill, 0);
                 $this->Ln();
                 $fill = !$fill;
             }
@@ -149,7 +151,7 @@ if (!$_SESSION['userId']) {
     $pdf->ln();
 
     // column titles
-    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Cot', 'Ass', 'Med');
+    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Cot', 'Ass', 'Med', 'Type');
     // data loading
     $data = $pdf->LoadData($dbh, 1);
     // print colored table
@@ -162,7 +164,7 @@ if (!$_SESSION['userId']) {
     $pdf->AddPage();
 
     // column titles
-    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Cot', 'Ass', 'Med');
+    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Cot', 'Ass', 'Med', 'Type');
     // data loading
     $data = $pdf->LoadData($dbh, 0);
     // print colored table
