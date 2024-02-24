@@ -99,31 +99,31 @@ if (!$_SESSION['userId']) {
                                                 <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->MobileNumber); ?></td>
                                                 <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->Email); ?></td>
                                                 <td><?php if ($row->DAN == "OK") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green' title='DAN en ordre'> </span>";
                                                     } else if ($row->DAN == "WARN") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange' title='DAN bientôt expirée'> </span>";
                                                     } else if ($row->DAN == "KO") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red' title='DAN expirée'> </span>";
                                                     } else {
-                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey' title='Pas de DAN'></span>";
                                                     } ?></td>
                                                 <td><?php if ($row->MED == "OK") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green' title='Certificat en ordre'> </span>";
                                                     } else if ($row->MED == "WARN") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange' title='Certificat bientôt expiré'> </span>";
                                                     } else if ($row->MED == "KO") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red' title='Certificat expiré'> </span>";
                                                     } else {
-                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey' title='Pas de certificat'> </span>";
                                                     } ?></td>
                                                 <td><?php if ($row->COT == "OK") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:green' title='Cotisation en ordre'> </span>";
                                                     } else if ($row->COT == "WARN") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-up' style='color:orange' title='Cotisation à payer bientôt'> </span>";
                                                     } else if ($row->COT == "KO") {
-                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-thumbs-down' style='color:red' title='Cotisation non payée'> </span>";
                                                     } else {
-                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey'> </span>";
+                                                        echo "<span class='glyphicon glyphicon-question-sign' style='color:grey' title='Pas de cotisation'> </span>";
                                                     } ?></td>
                                                 <td>
                                                     <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER']) { ?>
