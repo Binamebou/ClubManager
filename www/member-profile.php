@@ -2,9 +2,11 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
+require_once('utils.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else {
+    $utils = new utils();
     if (isset($_POST['submit'])) {
         $id = $_SESSION['userId'];
         $lastName = $_POST['lastName'];
@@ -16,6 +18,7 @@ if (!$_SESSION['userId']) {
         $city = $_POST['city'];
         $country = $_POST['country'];
         $birthDate = $_POST['birthDate'];
+        $highestCertificate = $_POST['highestCertificate'];
         if ($_POST['RGPD']) {
             $rgpd = 1;
         } else {
@@ -27,7 +30,7 @@ if (!$_SESSION['userId']) {
             $mailing = 0;
         }
 
-        $sql = "update myclub_member set LastName=:lastName, FirstName=:firstName, MobileNumber=:mobileNumber, Email=:email, Address=:address, PostalCode=:postalCode, City=:city, Country=:country, BirthDate=:birthDate, RGPD=:rgpd, Mailing=:mailing, LastUpdate=current_timestamp() where ID=:id";
+        $sql = "update myclub_member set LastName=:lastName, FirstName=:firstName, MobileNumber=:mobileNumber, Email=:email, Address=:address, PostalCode=:postalCode, City=:city, Country=:country, BirthDate=:birthDate, RGPD=:rgpd, Mailing=:mailing, LastUpdate=current_timestamp(), HighestCertificate=:highestCertificate where ID=:id";
         $query = $dbh->prepare($sql);
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
@@ -39,6 +42,7 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':city', $city, PDO::PARAM_STR);
         $query->bindParam(':country', $country, PDO::PARAM_STR);
         $query->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
+        $query->bindParam(':highestCertificate', $highestCertificate, PDO::PARAM_STR);
         $query->bindParam(':rgpd', $rgpd);
         $query->bindParam(':mailing', $mailing);
         $query->execute();
@@ -121,6 +125,21 @@ if (!$_SESSION['userId']) {
                                             <div class="form-group">
                                                 <label for="country">Pays</label>
                                                 <input type="text" name="country" value="<?php  echo $row->Country;?>" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="highestCertificate">Brevet le plus élevé</label>
+                                                <select id="highestCertificate" name="highestCertificate" class="form-control"
+                                                        required='required' style="padding: unset;">
+                                                    <?php
+                                                    foreach ($utils->getCertificates() as $key => $value) {
+                                                        echo '<option ';
+                                                        if ($row->HighestCertificate == $key) {
+                                                            echo 'selected="true" ';
+                                                        }
+                                                        echo "value=\"$key\">$value</option>";
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
                                             <div class="form-inline">
                                                 <label for="RGPD">Je consent à la gestion et la sauvegarde des données personnelles par l'administrateur du site</label>

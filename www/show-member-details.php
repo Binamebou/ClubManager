@@ -2,11 +2,13 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
+require_once('utils.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR'])) {
     header('location:dashboard.php');
 } else {
+    $utils = new utils();
     ?>
     <!DOCTYPE HTML>
     <html>
@@ -88,6 +90,11 @@ if (!$_SESSION['userId']) {
                                             <tr class="active">
                                                 <td>Type de membre</td>
                                                 <td><?php echo $row->MemberType; ?></td>
+                                            </tr>
+                                            <tr class="active">
+                                                <td>Brevet le plus élevé</td>
+                                                <td><?php echo $utils->getCertificateLabel($row->HighestCertificate) ?>
+                                                </td>
                                             </tr>
                                             <tr class="active">
                                                 <td>Login</td>

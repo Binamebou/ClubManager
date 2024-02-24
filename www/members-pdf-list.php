@@ -47,10 +47,11 @@ if (!$_SESSION['userId']) {
                     $data[$i][3] = $row->MobileNumber;
                     $data[$i][4] = $row->Email;
                     $data[$i][5] = $row->Address . "\n" . $row->PostalCode . " " . $row->City . " (" . $row->Country . ")";
-                    $data[$i][6] = $row->COT;
-                    $data[$i][7] = $row->DAN;
-                    $data[$i][8] = $row->MED;
-                    $data[$i][9] = $row->ArrivalDate == null ? " " : substr($row->MemberType,0,3) . "\n" .date("m/y", strtotime($row->ArrivalDate));
+                    $data[$i][6] = $row->HighestCertificate;
+                    $data[$i][7] = $row->COT;
+                    $data[$i][8] = $row->DAN;
+                    $data[$i][9] = $row->MED;
+                    $data[$i][10] = $row->ArrivalDate == null ? " " : substr($row->MemberType,0,3) . "\n" .date("m/y", strtotime($row->ArrivalDate));
                     $i++;
                 }
             }
@@ -67,7 +68,7 @@ if (!$_SESSION['userId']) {
             $this->SetLineWidth(0.3);
             $this->SetFont('', 'B', 7);
             // Header
-            $w = array(38, 32, 18, 30, 50, 70, 8, 8, 8, 10);
+            $w = array(38, 32, 18, 30, 50, 60, 10, 8, 8, 8, 10);
             $num_headers = count($header);
             for ($i = 0; $i < $num_headers; ++$i) {
                 $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
@@ -89,7 +90,8 @@ if (!$_SESSION['userId']) {
                 $this->Cell($w[6], 10, $row[6], 'LR', 0, 'L', $fill);
                 $this->Cell($w[7], 10, $row[7], 'LR', 0, 'L', $fill);
                 $this->Cell($w[8], 10, $row[8], 'LR', 0, 'L', $fill);
-                $this->MultiCell($w[9], 10, $row[9], 'LR', 'L', $fill, 0);
+                $this->Cell($w[9], 10, $row[9], 'LR', 0, 'L', $fill);
+                $this->MultiCell($w[10], 10, $row[10], 'LR', 'L', $fill, 0);
                 $this->Ln();
                 $fill = !$fill;
             }
@@ -151,7 +153,7 @@ if (!$_SESSION['userId']) {
     $pdf->ln();
 
     // column titles
-    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Cot', 'Ass', 'Med', 'Type');
+    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Brev', 'Cot', 'Ass', 'Med', 'Type');
     // data loading
     $data = $pdf->LoadData($dbh, 1);
     // print colored table
@@ -164,7 +166,7 @@ if (!$_SESSION['userId']) {
     $pdf->AddPage();
 
     // column titles
-    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Cot', 'Ass', 'Med', 'Type');
+    $header = array('Nom', 'Prénom', 'Naissance', 'Téléphone', 'email', 'Adresse', 'Brev', 'Cot', 'Ass', 'Med', 'Type');
     // data loading
     $data = $pdf->LoadData($dbh, 0);
     // print colored table

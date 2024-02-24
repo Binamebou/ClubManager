@@ -2,11 +2,13 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
+require_once('utils.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'])) {
     header('location:dashboard.php');
 } else {
+    $utils = new utils();
     if (isset($_POST['submit'])) {
         $id = $_GET['id'];
         $crypredPassword = md5($_POST['password']);
@@ -21,6 +23,7 @@ if (!$_SESSION['userId']) {
         $birthDate = $_POST['birthDate'];
         $arrivalDate = $_POST['arrivalDate'];
         $memberType = $_POST['memberType'];
+        $highestCertificate = $_POST['highestCertificate'];
         if ($_POST['RGPD']) {
             $rgpd = 1;
         } else {
@@ -32,7 +35,7 @@ if (!$_SESSION['userId']) {
             $mailing = 0;
         }
 
-        $sql = "update myclub_member set LastName=:lastName, FirstName=:firstName, MobileNumber=:mobileNumber, Email=:email, Address=:address, PostalCode=:postalCode, City=:city, Country=:country, BirthDate=:birthDate, ArrivalDate=:arrivalDate, MemberType=:memberType, RGPD=:rgpd, Mailing=:mailing, LastUpdate=current_timestamp() where ID=:id";
+        $sql = "update myclub_member set LastName=:lastName, FirstName=:firstName, MobileNumber=:mobileNumber, Email=:email, Address=:address, PostalCode=:postalCode, City=:city, Country=:country, BirthDate=:birthDate, ArrivalDate=:arrivalDate, MemberType=:memberType, RGPD=:rgpd, Mailing=:mailing, LastUpdate=current_timestamp(), HighestCertificate=:highestCertificate where ID=:id";
         $query = $dbh->prepare($sql);
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
@@ -46,6 +49,7 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
         $query->bindParam(':arrivalDate', $arrivalDate, PDO::PARAM_STR);
         $query->bindParam(':memberType', $memberType, PDO::PARAM_STR);
+        $query->bindParam(':highestCertificate', $highestCertificate, PDO::PARAM_STR);
         $query->bindParam(':rgpd', $rgpd);
         $query->bindParam(':mailing', $mailing);
         $query->execute();
@@ -63,7 +67,7 @@ if (!$_SESSION['userId']) {
         <div class="left-content">
             <div class="inner-content">
 
-                <?php include_once('includes/header.php');?>
+                <?php include_once('includes/header.php'); ?>
                 <!--//outer-wp-->
                 <div class="outter-wp">
                     <!--/sub-heard-part-->
@@ -92,65 +96,107 @@ if (!$_SESSION['userId']) {
                                         foreach ($results as $row) { ?>
                                             <div class="form-group">
                                                 <label for="lastName">Nom</label>
-                                                <input type="text" name="lastName" value="<?php  echo $row->LastName;?>" class="form-control" required='true'>
+                                                <input type="text" name="lastName" value="<?php echo $row->LastName; ?>"
+                                                       class="form-control" required='true'>
                                             </div>
                                             <div class="form-group">
                                                 <label for="firstName">Prénom</label>
-                                                <input type="text" name="firstName" value="<?php  echo $row->FirstName;?>" class="form-control" required='true'>
+                                                <input type="text" name="firstName"
+                                                       value="<?php echo $row->FirstName; ?>" class="form-control"
+                                                       required='true'>
                                             </div>
                                             <div class="form-group">
                                                 <label for="birthDate">Date de naissance</label>
-                                                <input type="date" name="birthDate" value="<?php  echo $row->BirthDate;?>" class="form-control">
+                                                <input type="date" name="birthDate"
+                                                       value="<?php echo $row->BirthDate; ?>" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="mobileNumber">Téléphone</label>
-                                                <input type="text" name="mobileNumber"" value="<?php  echo $row->MobileNumber;?>" class="form-control" >
+                                                <input type="text" name="mobileNumber""
+                                                value="<?php echo $row->MobileNumber; ?>" class="form-control" >
                                             </div>
                                             <div class="form-group">
                                                 <label for="email">Email</label>
-                                                <input type="email" name="email" value="<?php  echo $row->Email;?>" class="form-control" required='true'>
+                                                <input type="email" name="email" value="<?php echo $row->Email; ?>"
+                                                       class="form-control" required='true'>
                                             </div>
                                             <div class="form-group">
                                                 <label for="address">Adresse</label>
-                                                <input type="text" name="address" value="<?php  echo $row->Address;?>" class="form-control">
+                                                <input type="text" name="address" value="<?php echo $row->Address; ?>"
+                                                       class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="postalCode">Code postal</label>
-                                                <input type="text" name="postalCode" value="<?php  echo $row->PostalCode;?>" class="form-control">
+                                                <input type="text" name="postalCode"
+                                                       value="<?php echo $row->PostalCode; ?>" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="city">Localité</label>
-                                                <input type="text" name="city" value="<?php  echo $row->City;?>" class="form-control">
+                                                <input type="text" name="city" value="<?php echo $row->City; ?>"
+                                                       class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="country">Pays</label>
-                                                <input type="text" name="country" value="<?php  echo $row->Country;?>" class="form-control">
+                                                <input type="text" name="country" value="<?php echo $row->Country; ?>"
+                                                       class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="arrivalDate">Date d'arrivée au club</label>
-                                                <input type="date" name="arrivalDate" id="arrivalDate" value="<?php  echo $row->ArrivalDate;?>" class="form-control">
+                                                <input type="date" name="arrivalDate" id="arrivalDate"
+                                                       value="<?php echo $row->ArrivalDate; ?>" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="memberType">Type de membre</label>
                                                 <select id="memberType" name="memberType" class="form-control"
                                                         required='required' style="padding: unset;">
-                                                    <option <?php if($row->MemberType == "Adhérent") echo 'selected="true"';?> value="Adhérent">Adhérent</option>
-                                                    <option <?php if($row->MemberType == "Effectif") echo 'selected="true"';?> value="Effectif">Effectif</option>
+                                                    <option <?php if ($row->MemberType == "Adhérent") echo 'selected="true"'; ?>
+                                                            value="Adhérent">Adhérent
+                                                    </option>
+                                                    <option <?php if ($row->MemberType == "Effectif") echo 'selected="true"'; ?>
+                                                            value="Effectif">Effectif
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="highestCertificate">Brevet le plus élevé</label>
+                                                <select id="highestCertificate" name="highestCertificate"
+                                                        class="form-control"
+                                                        required='required' style="padding: unset;">
+                                                    <?php
+                                                    foreach ($utils->getCertificates() as $key => $value) {
+                                                        echo '<option ';
+                                                        if ($row->HighestCertificate == $key) {
+                                                            echo 'selected="true" ';
+                                                        }
+                                                        echo "value=\"$key\">$value</option>";
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                             <div class="form-inline">
-                                                <label for="RGPD">Consent à la gestion et la sauvegarde des données personnelles par l'administrateur du site</label>
-                                                <input type="checkbox" name="RGPD" value="1" class="form-inline" <?php  if ($row->RGPD == 1) { echo 'checked="checked"';}?>>
+                                                <label for="RGPD">Consent à la gestion et la sauvegarde des données
+                                                    personnelles par l'administrateur du site</label>
+                                                <input type="checkbox" name="RGPD" value="1"
+                                                       class="form-inline" <?php if ($row->RGPD == 1) {
+                                                    echo 'checked="checked"';
+                                                } ?>>
                                             </div>
                                             <div class="form-inline">
-                                                <label for="Mailing">Accepte de recevoir des informations par email</label>
-                                                <input type="checkbox" name="Mailing" value="1" class="form-inline" <?php  if ($row->Mailing == 1) { echo 'checked="checked"';}?>>
+                                                <label for="Mailing">Accepte de recevoir des informations par
+                                                    email</label>
+                                                <input type="checkbox" name="Mailing" value="1"
+                                                       class="form-inline" <?php if ($row->Mailing == 1) {
+                                                    echo 'checked="checked"';
+                                                } ?>>
                                             </div>
                                             <?php $cnt = $cnt + 1;
                                         }
                                     } ?>
-                                    <button type="submit" class="btn btn-default" name="submit" id="submit">Mettre à jour</button>
-                                    <input type="button" class="btn btn-warning" value="Annuler" onClick="history.back();return true;" />
+                                    <button type="submit" class="btn btn-default" name="submit" id="submit">Mettre à
+                                        jour
+                                    </button>
+                                    <input type="button" class="btn btn-warning" value="Annuler"
+                                           onClick="history.back();return true;"/>
                                 </form>
                             </div>
                         </div>

@@ -3,12 +3,13 @@ session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
 include('../includes/dbconstants.php');
+require_once('utils.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'])) {
     header('location:dashboard.php');
 } else {
-
+    $utils = new utils();
     function generateRandomString($length = 10) {
         return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
     }
@@ -29,6 +30,7 @@ if (!$_SESSION['userId']) {
         $birthDate = $_POST['birthDate'];
         $arrivalDate = $_POST['arrivalDate'];
         $memberType = $_POST['memberType'];
+        $highestCertificate = $_POST['highestCertificate'];
         if ($_POST['RGPD']) {
             $rgpd = 1;
         } else {
@@ -45,7 +47,7 @@ if (!$_SESSION['userId']) {
             $sendMail = 0;
         }
 
-        $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate, ArrivalDate, MemberType, RGPD, Mailing, active)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate,:arrivalDate,:memberType,:rgpd,:mailing, 1)";
+        $sql = "insert into myclub_member(LastName,FirstName,Login,MobileNumber,Email,Password,Address,PostalCode,City,Country,BirthDate, ArrivalDate, MemberType, RGPD, Mailing, active, HighestCertificate)values(:lastName,:firstName,:login,:mobileNumber,:email,:password,:address,:postalCode,:city,:country,:birthDate,:arrivalDate,:memberType,:rgpd,:mailing, 1, :highestCertificate)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
         $query->bindParam(':firstName', $firstName, PDO::PARAM_STR);
@@ -62,6 +64,7 @@ if (!$_SESSION['userId']) {
         $query->bindParam(':memberType', $memberType, PDO::PARAM_STR);
         $query->bindParam(':rgpd', $rgpd);
         $query->bindParam(':mailing', $mailing);
+        $query->bindParam(':highestCertificate', $highestCertificate, PDO::PARAM_STR);
         $query->execute();
 
         $LastInsertId = $dbh->lastInsertId();
@@ -132,7 +135,7 @@ if (!$_SESSION['userId']) {
                     <!--/sub-heard-part-->
                     <div class="sub-heard-part">
                         <ol class="breadcrumb m-b-0">
-                            <li><a href="dashboard.php">Accuiel</a></li>
+                            <li><a href="dashboard.php">Accueil</a></li>
                             <li class="active">Ajouter un membre</li>
                         </ol>
                     </div>
@@ -143,6 +146,8 @@ if (!$_SESSION['userId']) {
                         <div class="graph-form">
                             <div class="form-body">
                                 <form method="post">
+
+                                    <input id="password" type="hidden" name="password" value="<?php echo generateRandomString();?>">
 
                                     <div class="form-group">
                                         <label for="lastName">Nom</label>
@@ -195,13 +200,25 @@ if (!$_SESSION['userId']) {
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="login">Login</label>
-                                        <input id="login" type="text" name="login" value="" class="form-control"
-                                               required='required'>
+                                        <label for="highestCertificate">Brevet le plus élevé</label>
+                                        <select id="highestCertificate" name="highestCertificate" class="form-control"
+                                                required='required' style="padding: unset;">
+                                            <?php
+                                            $first = true;
+                                            foreach ($utils->getCertificates() as $key => $value) {
+                                                echo '<option ';
+                                                if ($first) {
+                                                    echo 'selected="true" ';
+                                                }
+                                                $first = false;
+                                                echo "value=\"$key\">$value</option>";
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="password">Mot de passe (un mot de passe aléatoire a été généré)</label>
-                                        <input id="password" type="password" name="password" value="<?php echo generateRandomString();?>" class="form-control"
+                                        <label for="login">Login</label>
+                                        <input id="login" type="text" name="login" value="" class="form-control"
                                                required='required'>
                                     </div>
                                     <div class="form-inline">
