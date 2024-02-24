@@ -3,6 +3,7 @@ session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
 include('../includes/dbconstants.php');
+require_once('utils.php');
 if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR'])) {
@@ -25,23 +26,25 @@ if (!$_SESSION['userId']) {
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_OBJ);
 
+    $utils = new utils();
     if ($query->rowCount() > 0) {
         foreach ($results as $row) {
             $dataActive[$i][0] = date("d/m/Y", strtotime($row->LastUpdate));
             $dataActive[$i][1] = $row->LastName;
             $dataActive[$i][2] = $row->FirstName;
-            $dataActive[$i][3] = date("d/m/Y", strtotime($row->BirthDate));
-            $dataActive[$i][4] = $row->MobileNumber;
-            $dataActive[$i][5] = $row->Email;
-            $dataActive[$i][6] = $row->Address;
-            $dataActive[$i][7] = $row->PostalCode;
-            $dataActive[$i][8] = $row->City;
-            $dataActive[$i][9] = $row->Country;
-            $dataActive[$i][10] = $row->COT;
-            $dataActive[$i][11] = $row->DAN;
-            $dataActive[$i][12] = $row->MED;
-            $dataActive[$i][13] = $row->MemberType;
-            $dataActive[$i][14] = date("d/m/Y", strtotime($row->ArrivalDate));
+            $dataActive[$i][3] = $utils->getCertificateLabel($row->HighestCertificate);
+            $dataActive[$i][4] = date("d/m/Y", strtotime($row->BirthDate));
+            $dataActive[$i][5] = $row->MobileNumber;
+            $dataActive[$i][6] = $row->Email;
+            $dataActive[$i][7] = $row->Address;
+            $dataActive[$i][8] = $row->PostalCode;
+            $dataActive[$i][9] = $row->City;
+            $dataActive[$i][10] = $row->Country;
+            $dataActive[$i][11] = $row->COT;
+            $dataActive[$i][12] = $row->DAN;
+            $dataActive[$i][13] = $row->MED;
+            $dataActive[$i][14] = $row->MemberType;
+            $dataActive[$i][15] = date("d/m/Y", strtotime($row->ArrivalDate));
             $i++;
         }
     }
@@ -74,6 +77,7 @@ if (!$_SESSION['userId']) {
         'Modifié le'=>'string',
         'Nom'=>'string',
         'Prénom'=>'string',
+        'Brevet'=>'string',
         'Date de naissance'=>'string',
         'Téléphone'=>'string',
         'Email'=>'string',

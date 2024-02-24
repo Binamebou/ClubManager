@@ -2,12 +2,15 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconnection.php');
+require_once('utils.php');
+
 if (!$_SESSION['userId']) {
     header('location:logout.php');
 } else if (!($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MANAGER'] || $_SESSION['ROLE_INSTRUCTOR'])) {
     header('location:dashboard.php');
 } else {
     $showArchived = $_POST['showArchived'] ? 1 : 0;
+    $utils = new utils();
     ?>
 
     <!DOCTYPE HTML>
@@ -53,6 +56,7 @@ if (!$_SESSION['userId']) {
                                         <th></th>
                                         <th>Nom</th>
                                         <th>Prénom</th>
+                                        <th>Brevet</th>
                                         <th>Date de naissance</th>
                                         <th>Téléphone</th>
                                         <th>Email</th>
@@ -90,6 +94,7 @@ if (!$_SESSION['userId']) {
                                                 </th>
                                                 <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->LastName); ?></td>
                                                 <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->FirstName); ?></td>
+                                                <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($utils->getCertificateLabel($row->HighestCertificate)); ?></td>
                                                 <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo date("d/m/Y", strtotime($row->BirthDate)); ?></td>
                                                 <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->MobileNumber); ?></td>
                                                 <td <?php if ($row->active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->Email); ?></td>

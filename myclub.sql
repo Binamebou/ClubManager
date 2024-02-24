@@ -105,3 +105,4 @@ ALTER TABLE myclub_certificates MODIFY Verso text;
 
 ALTER TABLE myclub_member ADD COLUMN ArrivalDate date;
 ALTER TABLE myclub_member ADD COLUMN MemberType varchar(20);
+ALTER TABLE myclub_member ADD COLUMN HighestCertificate varchar(100);
