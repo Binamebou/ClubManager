@@ -106,3 +106,34 @@ ALTER TABLE myclub_certificates MODIFY Verso text;
 ALTER TABLE myclub_member ADD COLUMN ArrivalDate date;
 ALTER TABLE myclub_member ADD COLUMN MemberType varchar(20);
 ALTER TABLE myclub_member ADD COLUMN HighestCertificate varchar(100);
+
+
+CREATE TABLE myclub_trainings
+(
+    ID              int(10) primary key auto_increment,
+    MemberId        int(10) not null,
+    TrainerId       int(10),
+    Type            varchar(256),
+    PaymentStatus   varchar(20),
+    Comment         text,
+    LastUpdate      timestamp DEFAULT current_timestamp(),
+    Active          boolean default true not null
+);
+
+CREATE TABLE myclub_training_documents
+(
+    ID          int(10) primary key auto_increment,
+    TrainingId  int(10) not null,
+    DocumentId  int(10) not null
+);
+
+CREATE TABLE myclub_training_actions
+(
+    ID          int(10) primary key auto_increment,
+    TrainingId  int(10) not null,
+    ActionDate  timestamp DEFAULT current_timestamp(),
+    Type        varchar(20),
+    Author      int(10),
+    Comment     text
+);
+
