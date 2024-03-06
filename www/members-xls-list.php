@@ -17,11 +17,11 @@ if (!$_SESSION['userId']) {
 
     $sql = "SELECT *, IFNULL((select 'ok' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
                                        union
-                                       select 'ok-' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), '-') as DAN,
+                                       select 'ok-' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH order by 1 limit 1), '-') as DAN,
                                    IFNULL((select 'ok' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
                                            union
-                                           select 'ok-' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), '-') as MED,
-                                   IFNULL((select 'ok' from myclub_membership where  MemberId = myclub_member.ID and Year = year(curdate())), '-') as COT from myclub_member where active = 1 order by LastName, FirstName";
+                                           select 'ok-' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH order by 1 limit 1), '-') as MED,
+                                   IFNULL((select 'ok' from myclub_membership where  MemberId = myclub_member.ID and Year = year(curdate()) order by 1 limit 1), '-') as COT from myclub_member where active = 1 order by LastName, FirstName";
     $query = $dbh->prepare($sql);
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_OBJ);

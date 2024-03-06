@@ -72,11 +72,11 @@ if (!$_SESSION['userId']) {
                                     $sql = "SELECT *
                                             , IFNULL((select 'OK' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
                                                union
-                                               select 'WARN' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as DAN,
+                                               select 'WARN' from myclub_documents where Type = 'Assurance DAN' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH order by 1 limit 1), 'KO') as DAN,
                                            IFNULL((select 'OK' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo BETWEEN CURDATE() + INTERVAL 1 MONTH AND CURDATE() + INTERVAL 1 YEAR
                                                    union
-                                                   select 'WARN' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH), 'KO') as MED,
-                                           IFNULL((select 'OK' from myclub_membership where  MemberId = myclub_member.ID and Year = year(curdate())), 'KO') as COT from myclub_member where active >= :activeStatus order by LastName, FirstName";
+                                                   select 'WARN' from myclub_documents where Type = 'Certificat Médical' and MemberId = myclub_member.ID and ValidFrom < CURDATE() and ValidTo > CURDATE() and ValidTo < CURDATE() + INTERVAL 1 MONTH order by 1 limit 1), 'KO') as MED,
+                                           IFNULL((select 'OK' from myclub_membership where  MemberId = myclub_member.ID and Year = year(curdate()) order by 1 limit 1), 'KO') as COT from myclub_member where active >= :activeStatus order by LastName, FirstName";
                                     $query = $dbh->prepare($sql);
                                     $query->bindParam(':activeStatus', $activeStatus);
                                     $query->execute();
