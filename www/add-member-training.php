@@ -170,9 +170,9 @@ if (!$_SESSION['userId']) {
                                             <label for="paymentStatus">Paiement</label>
                                             <select id="paymentStatus" name="paymentStatus"
                                                     required='required' class="form-control" style="padding: unset;">
-                                                <option value="NO" selected="selected">Non payé</option>
-                                                <option value="NO">Payé</option>
-                                                <option value="NO">Offert</option>
+                                                <option value="NOTPAID" selected="selected">Non payé</option>
+                                                <option value="PAID">Payé</option>
+                                                <option value="OTHER">Autre</option>
                                             </select>
                                         </div>
                                         <div class="form-group">

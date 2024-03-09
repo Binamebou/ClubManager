@@ -62,7 +62,7 @@ if (!$_SESSION['userId']) {
                                     <tbody>
                                     <?php
                                     $activeStatus = $showArchived == 1 ? 0 : 1;
-                                    $sql = "SELECT m.LastName as LastName, m.FirstName as FirstName, t.Type as Type, t.Active as Active,
+                                    $sql = "SELECT m.LastName as LastName, m.FirstName as FirstName, t.Type as Type, t.Active as Active, t.ID as ID,
                                             (SELECT a.ActionDate from myclub_training_actions a where a.TrainingId = t.ID AND a.Type = 'CREATED') as BeginDate
                                             from myclub_member as m, myclub_trainings as t where t.memberId = m.ID AND m.active = 1 AND t.Active >= :activeStatus order by m.LastName, m.FirstName, t.Type";
                                     $query = $dbh->prepare($sql);
@@ -76,7 +76,7 @@ if (!$_SESSION['userId']) {
                                             <tr class="active">
                                                 <th scope="row">
                                                     <a class="tooltips"
-                                                       href="show-member-details.php?id=<?php echo $row->ID; ?>">
+                                                       href="show-member-training-details.php?id=<?php echo $row->ID; ?>">
                                                         <span>Détail</span><i class="lnr lnr-magnifier"></i>
                                                     </a>
                                                 </th>
