@@ -50,18 +50,18 @@ if (!$_SESSION['userId']) {
                             <div class="graph-visual tables-main">
                                 <h2 class="inner-tittle"><?php echo $utils->getTrainingLabel($row->Type); ?> de <?php echo $row->FirstName . " " . $row->LastName;?></h2>
                                 <div class="graph">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped ">
-                                            <tr class="active">
+                                    <div class="table-responsive text-nowrap">
+                                        <table class="table">
+                                            <tr>
                                                 <td>Payement : <?php if($row->PaymentStatus == "NOTPAID") echo "A payer"; if($row->PaymentStatus == "PAID") echo "Payé"; if($row->PaymentStatus == "OTHER") echo "Autre";?></td>
                                             </tr>
-                                            <tr class="active">
+                                            <tr>
                                                 <td>Commentaire : <?php echo $row->Comment; ?></td>
                                             </tr>
-                                            <tr class="active">
+                                            <tr>
                                                 <td>Activités relatives à la formation</td>
                                             </tr>
-                                            <tr class="active">
+                                            <tr>
                                                 <td>
                                                     <?php
                                                     $id = $_GET['id'];
@@ -71,20 +71,20 @@ if (!$_SESSION['userId']) {
                                                     $query->execute();
                                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
                                                     if ($query->rowCount() > 0) {
+                                                        echo '<table class="table  table-striped">';
                                                         foreach ($results as $row) { ?>
-                                                            <table class="table table-striped">
-                                                                <tr class="active">
-                                                                    <td><?php echo $row->FirstName . " " . $row->LastName . " le " . date("d/m/Y", strtotime($row->ActionDate)); ?></td>
-                                                                    <td><?php echo $utils->getTrainingActionLabel($row->Type); ?></td>
+                                                                <tr>
+                                                                    <td style="width: 20%;"><?php echo $row->FirstName . " " . $row->LastName . " le " . date("d/m/Y", strtotime($row->ActionDate)); ?></td>
+                                                                    <td style="width: 20%;"><?php echo $utils->getTrainingActionLabel($row->Type); ?></td>
                                                                     <td><?php echo $row->Comment; ?></td>
                                                                 </tr>
-                                                            </table>
                                                             <?php
                                                         }
+                                                        echo "</table>";
                                                     }
                                                     ?>
                                                     <div class="new">
-                                                        <a href="add-member-training-action.php?id=<?php echo $row->ID; ?>">Ajouter une activité</a>
+                                                        <a href="add-member-training-action.php?id=<?php echo $id; ?>">Ajouter une activité</a>
                                                     </div>
                                                 </td>
                                             </tr>
