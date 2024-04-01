@@ -58,6 +58,17 @@ include('./../includes/dbconstants.php');
                 </li>
             <?php } ?>
 
+         <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_INSTRUCTOR']) { ?>
+                <li id="menu-academico"><a href="#"><i class="fa fa-book"></i> <span>Formations</span> <span
+                                class="fa fa-angle-right" style="float: right"></span></a>
+                    <ul id="menu-academico-sub">
+                        <li id="menu-academico-boletim"><a href="manage-members-trainings.php">Formations en cours</a></li>
+                        <li id="menu-academico-boletim"><a href="add-member-training.php">Ajouter une formation à un membre</a>
+                        </li>
+                    </ul>
+                </li>
+            <?php } ?>
+
             <?php if ($_SESSION['ROLE_ADMIN'] || $_SESSION['ROLE_MAILING']) { ?>
                 <li id="menu-academico"><a href="#"><i class="fa fa-envelope"></i> <span>Emails</span> <span
                                 class="fa fa-angle-right" style="float: right"></span></a>
