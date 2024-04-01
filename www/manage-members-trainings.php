@@ -56,6 +56,7 @@ if (!$_SESSION['userId']) {
                                         <th>Prénom</th>
                                         <th>Brevet</th>
                                         <th>Date de début</th>
+                                        <th>Moniteur</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -63,6 +64,7 @@ if (!$_SESSION['userId']) {
                                     <?php
                                     $activeStatus = $showArchived == 1 ? 0 : 1;
                                     $sql = "SELECT m.LastName as LastName, m.FirstName as FirstName, t.Type as Type, t.Active as Active, t.ID as ID,
+                                            (SELECT concat( me.FirstName, ' ', me.LastName) FROM myclub_member me where me.ID = t.TrainerId ) as Trainer,
                                             (SELECT a.ActionDate from myclub_training_actions a where a.TrainingId = t.ID AND a.Type = 'CREATED') as BeginDate
                                             from myclub_member as m, myclub_trainings as t where t.memberId = m.ID AND m.active = 1 AND t.Active >= :activeStatus order by m.LastName, m.FirstName, t.Type";
                                     $query = $dbh->prepare($sql);
@@ -84,10 +86,14 @@ if (!$_SESSION['userId']) {
                                                 <td <?php if ($row->Active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->FirstName); ?></td>
                                                 <td <?php if ($row->Active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($utils->getTrainingLabel($row->Type)); ?></td>
                                                 <td <?php if ($row->Active == 0) echo 'class="archived"'; ?>><?php echo date("d/m/Y", strtotime($row->BeginDate)); ?></td>
+                                                <td <?php if ($row->Active == 0) echo 'class="archived"'; ?>><?php echo htmlentities($row->Trainer); ?></td>
                                                 <td>
                                                     <a class="tooltips"
                                                        href="edit-member-training.php?id=<?php echo $row->ID; ?>"><span>Modifier</span><i
                                                                 class="lnr lnr-pencil"></i></a>
+                                                    <a class="tooltips"
+                                                       href="archive-member-training.php?id=<?php echo $row->ID; ?>"><span>Archiver</span><i
+                                                                class="lnr lnr-trash"></i></a>
                                                 </td>
                                             </tr>
                                             <?php $cnt = $cnt + 1;

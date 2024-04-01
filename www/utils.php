@@ -46,7 +46,8 @@ class utils
             'END' => 'Fin de la formation',
             'COMMAND' => 'Commande du brevet',
             'RECEPT' => 'Réception du brevet',
-            'GIVEN' => 'Délivrance du brevet'
+            'GIVEN' => 'Délivrance du brevet',
+            'OTHER' => 'Autre'
         );
     }
 
