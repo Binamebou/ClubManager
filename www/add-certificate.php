@@ -75,6 +75,7 @@ if (!$_SESSION['userId']) {
     <html lang="fr">
     <head>
         <?php include('includes/head.php'); ?>
+        <script src="js/html5-qrcode.min.js"></script>
     </head>
     <body>
     <div class="page-container">
@@ -139,6 +140,12 @@ if (!$_SESSION['userId']) {
                                                    required='required'>
                                         </div>
 
+                                        <div id="scanner-container" style="display:none; margin: 20px 0;">
+                                            <div id="qr-reader" style="width: 100%;"></div>
+                                        </div>
+
+                                        <button type="button" id="scan-qr" class="btn btn-info">Scanner le QR Code du brevet</button>
+
                                         <button type="submit" class="btn btn-default" name="submit" id="submit">Chercher
                                             le brevet
                                         </button>
@@ -189,7 +196,7 @@ if (!$_SESSION['userId']) {
 
         $(document).ready(function () {
             $(":input").inputmask();
-        }
+        });
 
         var toggle = true;
 
@@ -213,6 +220,88 @@ if (!$_SESSION['userId']) {
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        // QR code scanning functionality using html5-qrcode
+        let html5QrCode = null;
+        let isScanningActive = false;
+
+        if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            document.getElementById('scan-qr').addEventListener('click', function() {
+                if (!isScanningActive) {
+                    startQRScanning();
+                } else {
+                    stopQRScanning();
+                }
+            });
+        } else {
+            document.getElementById('scan-qr').style.display = 'none';
+        }
+
+        function startQRScanning() {
+            const qrReaderContainer = document.getElementById('qr-reader');
+            const urlInput = document.getElementById('url');
+            const scannerContainer = document.getElementById('scanner-container');
+
+            // Initialize html5-qrcode
+            html5QrCode = new Html5Qrcode("qr-reader", {
+                formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE]
+            });
+
+            // Start scanning
+            Html5Qrcode.getCameras().then(cameras => {
+                if (cameras && cameras.length > 0) {
+                    scannerContainer.style.display = 'block';
+
+                    html5QrCode.start(
+                        cameras[0].id,
+                        {
+                            fps: 10,
+                            qrbox: { width: 250, height: 250 },
+                            aspectRatio: 1.0,
+                            videoConstraints: {
+                                facingMode: "environment" // "environment" = arrière, "user" = selfie
+                              }
+                        },
+                        onScanSuccess,
+                        onScanError
+                    );
+                    isScanningActive = true;
+                    document.getElementById('scan-qr').textContent = 'Arrêter le scanner';
+                } else {
+                    alert('Aucune caméra trouvée.');
+                }
+            }).catch(err => {
+                console.error('Erreur lors de l\'accès aux caméras:', err);
+                alert('Erreur lors de l\'accès à la caméra.');
+            });
+        }
+
+        function stopQRScanning() {
+            const scannerContainer = document.getElementById('scanner-container');
+
+            if (html5QrCode && isScanningActive) {
+                html5QrCode.stop().then(() => {
+                    html5QrCode.clear();
+                    scannerContainer.style.display = 'none';
+                    isScanningActive = false;
+                    document.getElementById('scan-qr').textContent = 'Scanner le QR Code du brevet';
+                }).catch(err => {
+                    console.error('Erreur lors de l\'arrêt du scanner:', err);
+                });
+            }
+        }
+
+        function onScanSuccess(decodedText) {
+            // Handle successful scan
+            document.getElementById('url').value = decodedText;
+            stopQRScanning();
+        }
+
+        function onScanError(error) {
+            // Handle scanning errors (optional)
+            console.log('Erreur de scan:', error);
+        }
+    </script>
     </body>
     </html>
 <?php } ?>
