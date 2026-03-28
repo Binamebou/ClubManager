@@ -155,7 +155,7 @@ if (!$_SESSION['userId']) {
                                         </div>
                                         <div class="form-group">
                                             <label for="file">Fichier (max 2Mb)</label>
-                                            <input type="file" name="file" required="required" class="form-control-file"
+                                            <input type="file" name="file" accept="image/*,application/pdf" required="required" class="form-control-file"
                                                    style="padding: unset;">
                                         </div>
 

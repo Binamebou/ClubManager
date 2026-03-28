@@ -42,7 +42,7 @@ if (!$_SESSION['userId']) {
                                     <div class="card-body">
                                         <div class="row" style="padding:5%;">
                                             <div class="col-md-4 text-center">
-                                                <input type="file" id="image" required
+                                                <input type="file" accept="image/*" id="image" required
                                                        onchange="document.getElementById('ok_button').disabled=false;">
                                             </div>
                                         </div>
