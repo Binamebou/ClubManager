@@ -96,7 +96,7 @@ if (!$_SESSION['userId']) {
                                     </div>
                                     <div class="form-group">
                                         <label for="file">Fichier (max 2Mb)</label>
-                                        <input type="file" name="file" required="required" class="form-control-file" style="padding: unset;">
+                                        <input type="file" name="file" accept="image/*,application/pdf" required="required" class="form-control-file" style="padding: unset;">
                                     </div>
 
                                     <button type="submit" class="btn btn-default" name="submit" id="submit">Ajouter
